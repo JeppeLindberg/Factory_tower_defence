@@ -1,0 +1,6 @@
+{
+    "javelin_shooter": {
+        "prefab_path": "res://buildings/javelin_shooter.tscn",
+        "cost": 200
+    }
+}

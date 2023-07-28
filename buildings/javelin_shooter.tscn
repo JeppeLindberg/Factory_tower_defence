@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1ckeuadmf127"]
+
+[ext_resource type="Texture2D" uid="uid://b7wkdvsj6gqy8" path="res://sprites/basic.png" id="1_we2ru"]
+
+[node name="javelin_shooter" type="Node2D"]
+
+[node name="base" type="Sprite2D" parent="."]
+modulate = Color(0.313726, 0.811765, 0.94902, 1)
+position = Vector2(16, 16)
+texture = ExtResource("1_we2ru")

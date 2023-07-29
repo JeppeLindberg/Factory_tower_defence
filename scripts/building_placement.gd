@@ -6,31 +6,29 @@ var _cell_states := preload("res://scripts/library/cell_states.gd").new()
 
 var _main_scene
 var _terrain
+var _debug
 
-# Tower types and their costs
-const TOWER_COSTS = {
-    "BasicTower": 50,
-    "AdvancedTower": 100,
-    # Add more tower types and costs here
-}
-
-# The current selected tower type (change this via UI buttons)
-var currentTowerType = "BasicTower"
-
-# The player's resources (money)
 var resources = 200
 
 
 func _ready():
 	_main_scene = get_node(_scene_paths.MAIN_SCENE)
 	_terrain = get_node(_scene_paths.TERRAIN)
+	_debug = get_node(_scene_paths.DEBUG)
 
+func _process(_delta):
+	_debug.add_debug_text("resources", resources)
+
+# Place the current building at this coordinate
 func place_current_building_at_coord(coord):
 	var cell_info = _terrain.get_cell(coord)
-	if _cell_states.BUILDABLE in cell_info:
-		var building_dict = _buildings.get_building_by_name("javelin_shooter")
+	var building_dict = _buildings.get_building_by_name("javelin_shooter")
+
+	if _cell_states.BUILDABLE in cell_info and \
+		resources >= building_dict["cost"]:
 
 		_terrain.spawn_building(building_dict["prefab_path"], coord)
+		resources -= building_dict["cost"]
 
 
 # Called when the mouse button is pressed on the TileMap.

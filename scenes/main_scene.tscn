@@ -24,5 +24,16 @@ script = ExtResource("1_v354r")
 [node name="debug" type="Node2D" parent="."]
 script = ExtResource("3_txkdr")
 
+[node name="debug_ui_control" type="Control" parent="debug"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="debug_text" type="RichTextLabel" parent="debug/debug_ui_control"]
+layout_mode = 0
+offset_right = 453.0
+offset_bottom = 494.0
+
 [node name="building_placement" type="Node2D" parent="."]
 script = ExtResource("5_vuthm")

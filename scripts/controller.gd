@@ -18,12 +18,3 @@ func _unhandled_input(event):
 		_building_placement.place_current_building_at_coord(tile_pos)
 
 
-# Called when a tower is clicked.
-# func _on_TowerBase_gui_input(event):
-# 	if event is InputEventMouseButton and event.pressed:
-# 		# Get the clicked tower instance and upgrade it if possible (you need to implement upgrade logic in the tower script)
-# 		var tower = event.get_node(".")
-
-# 		if tower and tower.can_upgrade() and resources >= tower.upgrade_cost:
-# 			tower.upgrade()
-# 			resources -= tower.upgrade_cost

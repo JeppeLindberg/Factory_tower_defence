@@ -16,5 +16,3 @@ func _unhandled_input(event):
 		var tile_pos = _main_scene.pos_to_cell_coord(event.position)
 		
 		_building_placement.place_current_building_at_coord(tile_pos)
-
-

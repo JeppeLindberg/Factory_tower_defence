@@ -21,7 +21,7 @@ func _process(_delta):
 
 # Place the current building at this coordinate
 func place_current_building_at_coord(coord):
-	var cell_info = _terrain.get_cell(coord)
+	var cell_info = _terrain.get_cell_state(coord)
 	var building_dict = _buildings.get_building_by_name("javelin_shooter")
 
 	if _cell_states.BUILDABLE in cell_info and \

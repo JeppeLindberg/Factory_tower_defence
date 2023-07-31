@@ -14,8 +14,7 @@ func _ready():
 func _process(_delta):
 	_debug_text.text = ""
 	for key in _debug_text_dict:
-		var bla = str(_debug_text_dict[key])
-		_debug_text += str(_debug_text_dict[key]) + "\n"
+		_debug_text.text += str(_debug_text_dict[key]) + "\n"
 
 func add_debug_text(indentifier, text):
 	_debug_text_dict[indentifier] = text

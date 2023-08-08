@@ -6,6 +6,7 @@ var _debug
 var _terrain
 var _map
 
+var _allow_activate_node = false
 
 func _ready():
 	_debug = get_node(_scene_paths.DEBUG)
@@ -16,14 +17,23 @@ func _ready():
 
 	randomize()
 
+	_allow_activate_node = true
+
 	activate_node(self)
 	
 func activate_node(node):
+	if not _allow_activate_node:
+		return
+	
 	if node.has_method("activate"):
 		node.activate()
 
 	for child in node.get_children():
 		activate_node(child)
+
+# The number of seconds that has passed since scene start
+func seconds():
+	return float(Time.get_ticks_msec()) / 1000.0
 
 # Return the size of each cell in relation to the in-engine coordinates
 func quadrant_size():

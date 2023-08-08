@@ -11,6 +11,7 @@ var _behaviour_nodes
 var _spawn_node
 var _target_node
 
+var _spawn_time
 
 func activate():
 	_root_node = get_parent()
@@ -21,11 +22,12 @@ func activate():
 	
 	_find_spawner_and_target()
 
-	global_position = _spawn_node.global_position
+	_spawn_time = _main_scene.seconds()
+	_root_node.global_position = _spawn_node.global_position
 
 # Finds the spawner and target that this enemy uses
 func _find_spawner_and_target():
-	var all_behaviour_nodes = _behaviour_nodes.get_children
+	var all_behaviour_nodes = _behaviour_nodes.get_children()
 	var all_spawners = []
 	var all_targets = []
 
@@ -37,4 +39,9 @@ func _find_spawner_and_target():
 	
 	_spawn_node = _main_scene.get_random_element(all_spawners)
 	_target_node = _main_scene.get_random_element(all_targets)
+
+func _process(_delta):
+	var time_elapsed = _main_scene.seconds() - _spawn_time
+	var weight = time_elapsed * _enemy_specific.speed / 10.0
+	_root_node.global_position = lerp(_spawn_node.global_position, _target_node.global_position, weight)
 

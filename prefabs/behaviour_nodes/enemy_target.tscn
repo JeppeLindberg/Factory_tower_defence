@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://ct1q31naubqbx"]
+
+[node name="enemy_target" type="Node2D"]

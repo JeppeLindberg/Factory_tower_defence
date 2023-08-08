@@ -14,6 +14,17 @@ func _ready():
 
 	_debug.show_grid = true
 
+	randomize()
+
+	activate_node(self)
+	
+func activate_node(node):
+	if node.has_method("activate"):
+		node.activate()
+
+	for child in node.get_children():
+		activate_node(child)
+
 # Return the size of each cell in relation to the in-engine coordinates
 func quadrant_size():
 	return Vector2(_map.cell_quadrant_size, _map.cell_quadrant_size)
@@ -36,3 +47,8 @@ func create_node(prefab_path, parent):
 	var new_node = scene.instantiate()
 	parent.add_child(new_node)
 	return new_node
+
+# Return a random element from an array
+func get_random_element(options):
+	var index = randi() % options.size()
+	return options[index]

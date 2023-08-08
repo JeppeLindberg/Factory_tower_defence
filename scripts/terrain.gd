@@ -5,11 +5,13 @@ var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
 
 var _main_scene
 var _buildings
+var _map: TileMap
 
 
 func _ready():
 	_main_scene = get_node(_scene_paths.MAIN_SCENE)
 	_buildings = get_node("buildings")
+	_map = get_node("map")
 
 # Get all relevant information about a given cell
 func get_cell_state(coord):

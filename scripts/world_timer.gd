@@ -20,15 +20,18 @@ func _process(delta):
 	if _state == _timer_states.PLAYING:
 		_seconds += delta
 
+# Pause/unpause the world
 func toggle_pause():
 	if _state == _timer_states.PLAYING:
 		_state = _timer_states.PAUSED
 	elif _state == _timer_states.PAUSED:
 		_state = _timer_states.PLAYING
 
+# Stop the timer. It cannot be un-stopped
 func stop():
 	_state = _timer_states.STOPPED
 
+# Return the amount of seconds (floating point) that has elapsed in the world timer
 func seconds():
 	return _seconds
 

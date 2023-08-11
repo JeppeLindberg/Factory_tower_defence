@@ -23,6 +23,8 @@ func activate():
 	_tower_defence = get_node(_scene_paths.TOWER_DEFENCE)
 	_terrain = get_node(_scene_paths.TERRAIN)
 	_behaviour_nodes = _terrain.get_node("behaviour_nodes")
+
+	_root_node.add_to_group(_groups.ENEMY)
 	
 	_find_spawner_and_target()
 

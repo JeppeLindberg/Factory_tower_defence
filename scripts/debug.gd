@@ -5,6 +5,7 @@ var _debug_text_dict = {}
 
 var _map
 var _debug_text
+var _draw_lines = []
 
 
 func _ready():
@@ -19,6 +20,10 @@ func _process(_delta):
 func add_debug_text(indentifier, text):
 	_debug_text_dict[indentifier] = text
 
+func add_draw_line(pos_a, pos_b, color = Color.DARK_RED):
+	_draw_lines.append({"pos_a": pos_a, "pos_b": pos_b, "color": color})
+
+# A default function where you draw debug info
 func _draw():
 	if show_grid == true:
 		for x in range(0,100):

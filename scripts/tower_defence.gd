@@ -45,13 +45,16 @@ func _process(_delta):
 			else:
 				_next_event_timer += 0.5
 
+# Change the state of the tower defence part of the game
 func change_state(new_state):
 	_state = new_state
 
+# Spawn an enemy. Each enemy spawn behavour is handled by the enemy itself.
 func spawn_enemy():
 	_remaining_enemy_spawns -= 1
 	_main_scene.create_node(enemy_path, _enemies)
 
+# Take damage from an enemy reaching the reactor
 func take_damage():
 	_remaining_health -= 1
 	if _remaining_health == 0:

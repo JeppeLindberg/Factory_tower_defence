@@ -20,7 +20,8 @@ func _ready():
 	_allow_activate_node = true
 
 	activate_node(self)
-	
+
+# Distributes a message to a node and its children recursively, that activates that node after all nodes have been instantiated
 func activate_node(node):
 	if not _allow_activate_node:
 		return

@@ -6,6 +6,8 @@ var _groups := preload("res://scripts/library/groups.gd").new()
 var _root_node
 var _enemy_specific
 var _main_scene
+var _world_timer
+var _tower_defence
 var _terrain
 var _behaviour_nodes
 var _spawn_node
@@ -17,12 +19,14 @@ func activate():
 	_root_node = get_parent()
 	_enemy_specific = get_child(0)
 	_main_scene = get_node(_scene_paths.MAIN_SCENE)
+	_world_timer = get_node(_scene_paths.WORLD_TIMER)
+	_tower_defence = get_node(_scene_paths.TOWER_DEFENCE)
 	_terrain = get_node(_scene_paths.TERRAIN)
 	_behaviour_nodes = _terrain.get_node("behaviour_nodes")
 	
 	_find_spawner_and_target()
 
-	_spawn_time = _main_scene.seconds()
+	_spawn_time = _world_timer.seconds()
 	_root_node.global_position = _spawn_node.global_position
 
 # Finds the spawner and target that this enemy uses
@@ -41,7 +45,14 @@ func _find_spawner_and_target():
 	_target_node = _main_scene.get_random_element(all_targets)
 
 func _process(_delta):
-	var time_elapsed = _main_scene.seconds() - _spawn_time
+	var time_elapsed = _world_timer.seconds() - _spawn_time
 	var weight = time_elapsed * _enemy_specific.speed / 10.0
 	_root_node.global_position = lerp(_spawn_node.global_position, _target_node.global_position, weight)
+
+	if weight > 1:
+		_tower_defence.take_damage()
+		die()
+
+func die():
+	_root_node.queue_free()
 

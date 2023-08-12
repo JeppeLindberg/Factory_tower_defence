@@ -13,6 +13,7 @@ script = ExtResource("1_rnifl")
 
 [node name="generic_tower" type="Node2D" parent="."]
 script = ExtResource("1_bppie")
+bullet_path = "res://prefabs/basic_bullet.tscn"
 
 [node name="javelin_shooter" type="Node2D" parent="generic_tower"]
 script = ExtResource("2_lrfc8")
@@ -30,3 +31,5 @@ position = Vector2(16, 16)
 
 [node name="collision" type="CollisionShape2D" parent="range"]
 shape = SubResource("CircleShape2D_60yd6")
+
+[node name="bullet_container" type="Node2D" parent="."]

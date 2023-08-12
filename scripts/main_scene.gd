@@ -13,8 +13,6 @@ func _ready():
 	_terrain = get_node(_scene_paths.TERRAIN)
 	_map = _terrain.get_node("map")
 
-	_debug.show_grid = true
-
 	randomize()
 
 	_allow_activate_node = true

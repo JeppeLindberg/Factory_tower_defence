@@ -16,7 +16,13 @@ func _ready():
 # Called on any input that has not already been handled by the UI or other sources
 func _unhandled_input(event):
 	if event is InputEventMouseButton and event.pressed:
-		var tile_pos = _main_scene.pos_to_cell_coord(event.position)
+		var footprint_x = _building_placement.current_building["footprint_x"]
+		var footprint_y = _building_placement.current_building["footprint_y"]
+		var event_pos = event.position
+		event_pos -= Vector2((footprint_x - 1) * (_main_scene.quadrant_size().x / 2),
+								(footprint_y - 1) * (_main_scene.quadrant_size().y / 2))
+
+		var tile_pos = _main_scene.pos_to_cell_coord(event_pos)
 		
 		_building_placement.place_current_building_at_coord(tile_pos)
 	

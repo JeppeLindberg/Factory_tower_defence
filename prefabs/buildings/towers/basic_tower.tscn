@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcce3wwekeh4y"]
+
+[ext_resource type="Script" path="res://scripts/library/activate_on_ready.gd" id="1_3mwbs"]
+[ext_resource type="Script" path="res://scripts/buildings/generic_tower.gd" id="2_qq7o4"]
+[ext_resource type="Script" path="res://scripts/buildings/towers/javelin_shooter.gd" id="3_yijg2"]
+[ext_resource type="Texture2D" uid="uid://b7wkdvsj6gqy8" path="res://sprites/basic.png" id="4_rta5u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_60yd6"]
+radius = 232.106
+
+[node name="basic_tower" type="Node2D"]
+script = ExtResource("1_3mwbs")
+
+[node name="generic_tower" type="Node2D" parent="."]
+script = ExtResource("2_qq7o4")
+bullet_path = "res://prefabs/basic_bullet.tscn"
+
+[node name="basic_tower" type="Node2D" parent="generic_tower"]
+script = ExtResource("3_yijg2")
+
+[node name="bullet_emitter" type="Node2D" parent="."]
+position = Vector2(16, 16)
+
+[node name="base" type="Sprite2D" parent="."]
+modulate = Color(0.313726, 0.811765, 0.94902, 1)
+position = Vector2(16, 16)
+texture = ExtResource("4_rta5u")
+
+[node name="range" type="Area2D" parent="."]
+position = Vector2(16, 16)
+
+[node name="collision" type="CollisionShape2D" parent="range"]
+shape = SubResource("CircleShape2D_60yd6")
+
+[node name="bullet_container" type="Node2D" parent="."]

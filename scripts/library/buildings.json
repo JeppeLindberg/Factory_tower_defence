@@ -1,6 +1,8 @@
 {
     "javelin_shooter": {
         "prefab_path": "res://prefabs/buildings/towers/javelin_shooter.tscn",
-        "cost": 20
+        "cost": 20,
+        "footprint_x": 2,
+        "footprint_y": 2
     }
 }

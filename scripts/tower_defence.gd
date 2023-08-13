@@ -43,7 +43,7 @@ func _process(_delta):
 				_next_event_timer += 10.0
 				change_state(_tower_defence_states.WAITING_FOR_NEXT_WAVE)
 			else:
-				_next_event_timer += 0.5
+				_next_event_timer += 0.1
 
 # Change the state of the tower defence part of the game
 func change_state(new_state):

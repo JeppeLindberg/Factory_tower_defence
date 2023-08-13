@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bpqmsjtte7wyu"]
+[gd_scene load_steps=7 format=3 uid="uid://bpqmsjtte7wyu"]
 
 [ext_resource type="Texture2D" uid="uid://dc54td07xf7xq" path="res://sprites/basic_round.png" id="1_46olt"]
 [ext_resource type="Script" path="res://scripts/enemy_generic.gd" id="1_qwvou"]
 [ext_resource type="Script" path="res://scripts/library/activate_on_ready.gd" id="1_xqeqw"]
+[ext_resource type="Texture2D" uid="uid://b7wkdvsj6gqy8" path="res://sprites/basic.png" id="2_11qsd"]
 [ext_resource type="Script" path="res://scripts/enemies/basic_enemy.gd" id="3_he42f"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uf2u8"]
@@ -10,6 +11,27 @@ radius = 8.0
 
 [node name="basic_enemy" type="Node2D"]
 script = ExtResource("1_xqeqw")
+
+[node name="health_bar" type="Node2D" parent="."]
+visible = false
+z_index = 2
+position = Vector2(0, -13)
+scale = Vector2(2, 1.5)
+
+[node name="scalar" type="Node2D" parent="health_bar"]
+position = Vector2(-7.3, 0)
+
+[node name="green_bar" type="Sprite2D" parent="health_bar/scalar"]
+modulate = Color(0.321569, 0.556863, 0.184314, 1)
+position = Vector2(7.3, 0)
+scale = Vector2(0.45, 0.08)
+texture = ExtResource("2_11qsd")
+
+[node name="red_bar" type="Sprite2D" parent="health_bar"]
+modulate = Color(0.843137, 0.360784, 0.34902, 1)
+z_index = -2
+scale = Vector2(0.45, 0.08)
+texture = ExtResource("2_11qsd")
 
 [node name="enemy_generic" type="Node2D" parent="."]
 script = ExtResource("1_qwvou")

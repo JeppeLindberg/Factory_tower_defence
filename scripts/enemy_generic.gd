@@ -12,7 +12,11 @@ var _terrain
 var _behaviour_nodes
 var _spawn_node
 var _target_node
+var _health_bar
+var _health_scalar
 
+var _max_health = 3
+var _health = 3
 var _spawn_time
 
 func activate():
@@ -23,6 +27,8 @@ func activate():
 	_tower_defence = get_node(_scene_paths.TOWER_DEFENCE)
 	_terrain = get_node(_scene_paths.TERRAIN)
 	_behaviour_nodes = _terrain.get_node("behaviour_nodes")
+	_health_bar = _root_node.get_node("health_bar")
+	_health_scalar = _health_bar.get_node("scalar")
 
 	_root_node.add_to_group(_groups.ENEMY)
 	
@@ -53,6 +59,16 @@ func _process(_delta):
 
 	if weight > 1:
 		_tower_defence.take_damage()
+		die()
+
+# Take damage from a tower's bullet
+func take_damage(damage):
+	_health -= damage
+
+	_health_bar.visible = _health != _max_health
+	_health_scalar.scale = Vector2(_health/_max_health, 1)
+
+	if _health <= 0:
 		die()
 
 func die():

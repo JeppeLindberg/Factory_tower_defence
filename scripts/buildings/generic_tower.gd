@@ -38,7 +38,7 @@ func _process(_delta):
 		_next_shot_time = _world_timer.seconds()
 
 	elif _target != null:
-		_debug.add_draw_line(_bullet_emitter.global_position, _target.global_position)
+		# _debug.add_draw_line(_bullet_emitter.global_position, _target.global_position)
 
 		if _world_timer.seconds() >= _next_shot_time:
 			var charge_time = _world_timer.seconds() - _next_shot_time

@@ -4,11 +4,11 @@
 [ext_resource type="Script" path="res://scripts/bullet.gd" id="1_y2xhi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uhkbn"]
-radius = 5.38516
+radius = 5.09902
 
 [node name="basic_bullet" type="Area2D"]
 script = ExtResource("1_y2xhi")
-speed = 10000.0
+speed = 2000.0
 damage = 1.0
 
 [node name="sprite" type="Sprite2D" parent="."]
@@ -18,5 +18,3 @@ texture = ExtResource("1_23880")
 
 [node name="collider" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_uhkbn")
-
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]

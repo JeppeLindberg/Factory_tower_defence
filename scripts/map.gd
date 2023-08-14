@@ -10,22 +10,23 @@ var _behaviour_nodes
 @export var enemy_spawner_path: String
 @export var enemy_target_path: String
 
-var _used_cell_coords
+var used_cell_coords
 
+
+func _ready():
+	# Creates an array of Vector2i's that represent all the coordinates that has a tile
+	used_cell_coords = get_used_cells(0)
 
 func activate():
 	_main_scene = get_node(_scene_paths.MAIN_SCENE)
 	_terrain = get_node(_scene_paths.TERRAIN)
 	_behaviour_nodes = _terrain.get_node("behaviour_nodes")
 
-	# Creates an array of Vector2i's that represent all the coordinates that has a tile
-	_used_cell_coords = get_used_cells(0)
-
 	_create_behavour_nodes()
 
 # Creates all behavour nodes in the scene, according to the custom data element "type"
 func _create_behavour_nodes():
-	for cell_coord in _used_cell_coords:
+	for cell_coord in used_cell_coords:
 		var data: TileData = get_cell_tile_data(0, cell_coord)
 		var cell_pos = _main_scene.cell_coord_to_pos(cell_coord)
 		

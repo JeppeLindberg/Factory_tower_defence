@@ -92,6 +92,8 @@ enemy_target_path = "res://prefabs/behaviour_nodes/enemy_target.tscn"
 
 [node name="enemies" type="Node2D" parent="terrain"]
 
+[node name="paths" type="Node2D" parent="terrain"]
+
 [node name="controller" type="Node2D" parent="."]
 script = ExtResource("1_v354r")
 

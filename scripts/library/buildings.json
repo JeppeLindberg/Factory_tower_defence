@@ -12,5 +12,12 @@
         "cost": 0,
         "footprint_x": 2,
         "footprint_y": 2
+    },
+    "conveyor_belt": {
+        "prefab_path": "res://prefabs/buildings/transport/conveyor_belt.tscn",
+        "sprite_path": "res://sprites/buildings/conveyor_belt.png",
+        "cost": 0,
+        "footprint_x": 1,
+        "footprint_y": 1
     }
 }

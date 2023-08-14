@@ -16,5 +16,4 @@ func get_all_buildings():
 
 # Return the information of a certain building
 func get_building_by_name(name):
-	var buildings_dict = get_all_buildings()
-	return buildings_dict[name]
+	return get_all_buildings()[name]

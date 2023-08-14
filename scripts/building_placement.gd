@@ -9,6 +9,7 @@ var _terrain
 var _debug
 
 var current_building = null
+var current_building_name = null
 var resources = 200
 
 
@@ -16,10 +17,15 @@ func activate():
 	_main_scene = get_node(_scene_paths.MAIN_SCENE)
 	_terrain = get_node(_scene_paths.TERRAIN)
 	_debug = get_node(_scene_paths.DEBUG)
-	current_building = _buildings.get_building_by_name("javelin_shooter")
+	set_current_building("drill_1")
 
 func _process(_delta):
 	_debug.add_debug_text("resources", resources)
+
+# Change the currently active building
+func set_current_building(building_name):
+	current_building = _buildings.get_building_by_name(building_name)
+	current_building_name = building_name
 
 # Place the current building at this coordinate
 func place_current_building_at_coord(coord):

@@ -1,17 +1,68 @@
-[gd_scene load_steps=10 format=3 uid="uid://dx78awoua36rc"]
+[gd_scene load_steps=13 format=3 uid="uid://dx78awoua36rc"]
 
 [ext_resource type="Script" path="res://scripts/main_scene.gd" id="1_kikt0"]
 [ext_resource type="Script" path="res://scripts/controller.gd" id="1_v354r"]
 [ext_resource type="Script" path="res://scripts/terrain.gd" id="2_21qa5"]
+[ext_resource type="Script" path="res://scripts/ui/ui.gd" id="2_e2fnj"]
 [ext_resource type="Script" path="res://scripts/world_timer.gd" id="2_k3tlx"]
 [ext_resource type="Script" path="res://scripts/tower_defence.gd" id="3_s4em8"]
 [ext_resource type="Script" path="res://scripts/debug.gd" id="3_txkdr"]
+[ext_resource type="Script" path="res://scripts/ui/building_buttons.gd" id="4_k8eb4"]
 [ext_resource type="TileSet" uid="uid://dnv1am0rkftcy" path="res://tilesets/kenny.tres" id="4_mxxtt"]
 [ext_resource type="Script" path="res://scripts/map.gd" id="5_r48p8"]
 [ext_resource type="Script" path="res://scripts/building_placement.gd" id="5_vuthm"]
+[ext_resource type="Texture2D" uid="uid://b0go126ne14t1" path="res://sprites/panel.png" id="11_y0ryh"]
 
 [node name="main_scene" type="Node2D"]
 script = ExtResource("1_kikt0")
+
+[node name="ui" type="Node2D" parent="."]
+z_index = 100
+script = ExtResource("2_e2fnj")
+
+[node name="bottom_center" type="Control" parent="ui"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 582.0
+offset_top = 646.0
+offset_right = 582.0
+offset_bottom = 646.0
+
+[node name="building_panel" type="NinePatchRect" parent="ui/bottom_center"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -142.5
+offset_top = -120.0
+offset_right = 142.5
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("11_y0ryh")
+patch_margin_left = 30
+patch_margin_top = 30
+patch_margin_right = 30
+patch_margin_bottom = 30
+
+[node name="building_buttons" type="HBoxContainer" parent="ui/bottom_center/building_panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.0
+offset_top = -40.0
+offset_right = 82.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+script = ExtResource("4_k8eb4")
+button_path = "res://prefabs/ui/building_button.tscn"
 
 [node name="world_timer" type="Node2D" parent="."]
 script = ExtResource("2_k3tlx")

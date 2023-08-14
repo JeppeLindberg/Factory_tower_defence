@@ -1,7 +1,15 @@
 {
     "javelin_shooter": {
         "prefab_path": "res://prefabs/buildings/towers/javelin_shooter.tscn",
+        "sprite_path": "res://sprites/buildings/tower_base.png",
         "cost": 20,
+        "footprint_x": 2,
+        "footprint_y": 2
+    },
+    "drill_1": {
+        "prefab_path": "res://prefabs/buildings/gathering/drill_1.tscn",
+        "sprite_path": "res://sprites/buildings/drill_1.png",
+        "cost": 0,
         "footprint_x": 2,
         "footprint_y": 2
     }

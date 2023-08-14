@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bt2087kxtg1go"]
+
+[ext_resource type="Texture2D" uid="uid://bhggn228c4kie" path="res://sprites/buildings/conveyour_belt.png" id="1_qq8oe"]
+
+[node name="conveyour_belt" type="Node2D"]
+
+[node name="sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_qq8oe")

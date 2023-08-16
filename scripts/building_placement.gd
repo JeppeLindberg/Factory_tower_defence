@@ -35,7 +35,7 @@ func place_current_building_at_coord(coord):
 			cell_coords.append(Vector2i(coord.x + x, coord.y + y))
 	var cell_infos = []
 	for cell_coord in cell_coords:
-		cell_infos.append(_terrain.get_cell_state(cell_coord))
+		cell_infos.append(_terrain.get_cell(cell_coord)["state"])
 
 	for cell_info in cell_infos:
 		if not _cell_states.BUILDABLE in cell_info:
@@ -44,6 +44,6 @@ func place_current_building_at_coord(coord):
 	if resources < current_building["cost"]:
 		return
 	
-	_terrain.spawn_building(current_building, coord)
+	_terrain.spawn_building(current_building_name, current_building, coord)
 	resources -= current_building["cost"]
 

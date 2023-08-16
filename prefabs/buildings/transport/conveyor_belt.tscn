@@ -1,10 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://c2t4jm8eg37w5"]
+[gd_scene load_steps=4 format=3 uid="uid://c2t4jm8eg37w5"]
 
+[ext_resource type="Script" path="res://scripts/building.gd" id="1_gxvra"]
 [ext_resource type="Script" path="res://scripts/buildings/transport/conveyor_belt.gd" id="1_s0rg3"]
 [ext_resource type="Texture2D" uid="uid://bhggn228c4kie" path="res://sprites/buildings/conveyor_belt.png" id="2_0ynxf"]
 
-[node name="conveyour_belt" type="Node2D"]
+[node name="conveyor_belt" type="Node2D"]
+script = ExtResource("1_gxvra")
+
+[node name="generic_building" type="Node2D" parent="."]
 script = ExtResource("1_s0rg3")
+new_path_path = "res://prefabs/path.tscn"
 
 [node name="sprite" type="Sprite2D" parent="."]
 position = Vector2(16, 16)

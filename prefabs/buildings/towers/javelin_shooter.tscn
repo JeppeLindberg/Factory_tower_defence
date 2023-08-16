@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c1ckeuadmf127"]
+[gd_scene load_steps=6 format=3 uid="uid://dvhabtk8hf3fi"]
 
 [ext_resource type="Script" path="res://scripts/buildings/generic_tower.gd" id="1_bppie"]
-[ext_resource type="Script" path="res://scripts/library/activate_on_ready.gd" id="1_rnifl"]
+[ext_resource type="Script" path="res://scripts/building.gd" id="1_rnifl"]
 [ext_resource type="Script" path="res://scripts/buildings/towers/javelin_shooter.gd" id="2_lrfc8"]
 [ext_resource type="Texture2D" uid="uid://dhjv6udmuj53l" path="res://sprites/buildings/tower_base.png" id="4_xwimb"]
 
@@ -11,11 +11,11 @@ radius = 232.106
 [node name="javelin_shooter" type="Node2D"]
 script = ExtResource("1_rnifl")
 
-[node name="generic_tower" type="Node2D" parent="."]
+[node name="generic_building" type="Node2D" parent="."]
 script = ExtResource("1_bppie")
 bullet_path = "res://prefabs/basic_bullet.tscn"
 
-[node name="javelin_shooter" type="Node2D" parent="generic_tower"]
+[node name="specific_building" type="Node2D" parent="generic_building"]
 script = ExtResource("2_lrfc8")
 footprint = Vector2i(2, 2)
 

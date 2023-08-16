@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dcce3wwekeh4y"]
+[gd_scene load_steps=6 format=3]
 
-[ext_resource type="Script" path="res://scripts/library/activate_on_ready.gd" id="1_3mwbs"]
+[ext_resource type="Script" path="res://scripts/building.gd" id="1_3mwbs"]
 [ext_resource type="Script" path="res://scripts/buildings/generic_tower.gd" id="2_qq7o4"]
 [ext_resource type="Script" path="res://scripts/buildings/towers/javelin_shooter.gd" id="3_yijg2"]
 [ext_resource type="Texture2D" uid="uid://b7wkdvsj6gqy8" path="res://sprites/basic.png" id="4_rta5u"]

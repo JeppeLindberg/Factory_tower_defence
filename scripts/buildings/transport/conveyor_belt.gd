@@ -9,7 +9,7 @@ var _terrain
 var _paths
 var _debug
 
-var _path = null
+var path = null
 
 func activate():
 	_main_scene = get_node(_scene_paths.MAIN_SCENE)
@@ -17,34 +17,54 @@ func activate():
 	_paths = _terrain.get_node("paths")
 	_debug = get_node(_scene_paths.DEBUG)
 
+	var prev_coord = _main_scene.pos_to_cell_coord(global_position) + Vector2i.UP
 	var this_coord = _main_scene.pos_to_cell_coord(global_position)
+	var next_coord = _main_scene.pos_to_cell_coord(global_position) + Vector2i.DOWN
 
-	update_path(this_coord)
+	connect_path(prev_coord, this_coord)
+	connect_path(this_coord, next_coord)
 
 func _process(_delta):
-	for i in range(_path.curve.point_count - 1):
-		_debug.add_draw_line(_path.curve.get_point_position(i), _path.curve.get_point_position(i+1), Color.AQUA)
+	if path != null:
+		for i in range(path.curve.point_count - 1):
+			_debug.add_draw_line(path.curve.get_point_position(i), path.curve.get_point_position(i+1), Color.AQUA)
 
-func update_path(coord):
-	var prev_coord = _main_scene.pos_to_cell_coord(global_position) + Vector2i.UP
+# Connect the conveyor's path with new coordinates in the world
+func connect_path(from_coord, to_coord):	
+	var from_info = _terrain.get_cell(from_coord)
 
-	var prev_cell_info = _terrain.get_cell(prev_coord)
+	if from_info["building"] == null:
+		_start_new_path(from_coord, to_coord)	
+	elif from_info["building"].building_name == "conveyor_belt" \
+		and path == null:		
+		var from_conveyor = from_info["building"].get_node("generic_building")
+		path = from_conveyor.path
+		_add_to_path(from_coord, to_coord)
+	elif path != null:
+		_add_to_path(from_coord, to_coord)
 
-	if prev_cell_info["building"] == null:
-		_start_new_path(prev_coord, coord)
-		return
-
-	if prev_cell_info["building"].building_name == "conveyor_belt":
-		prev_cell_info["building"].get_node("generic_building").update_path
-
-func _start_new_path(prev_coord, this_coord):
-	var prev_pos = _main_scene.cell_coord_to_pos(prev_coord) + _main_scene.quadrant_size() * 0.5
-
-	var this_pos = _main_scene.cell_coord_to_pos(this_coord) + _main_scene.quadrant_size() * 0.5
+# Called when a new path is created, and instantiates it correctly
+func _start_new_path(from_coord, to_coord):
+	var from_pos = _main_scene.cell_coord_to_pos(from_coord) + _main_scene.quadrant_size() * 0.5
+	var to_pos = _main_scene.cell_coord_to_pos(to_coord) + _main_scene.quadrant_size() * 0.5
 
 	var new_path: Path2D = _main_scene.create_node(new_path_path, _paths)
-	new_path.curve.add_point(prev_pos)
-	new_path.curve.add_point(this_pos)
+	new_path.curve = Curve2D.new()
+	new_path.curve.add_point(from_pos)
+	new_path.curve.add_point(to_pos)
 
-	_path = new_path
+	path = new_path
+
+# Add to an existing path
+func _add_to_path(from_coord, to_coord):
+	var from_pos = _main_scene.cell_coord_to_pos(from_coord) + _main_scene.quadrant_size() * 0.5
+	var to_pos = _main_scene.cell_coord_to_pos(to_coord) + _main_scene.quadrant_size() * 0.5
+
+	for i in range(path.curve.point_count - 1):
+		if path.curve.get_point_position(i) == from_pos:
+			if path.curve.get_point_position(i + 1) == to_pos:
+				return
+
+	path.curve.add_point(to_pos, Vector2(0, 0), Vector2(0, 0))
+	return
 

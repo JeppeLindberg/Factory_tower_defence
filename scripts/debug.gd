@@ -24,7 +24,9 @@ func add_debug_text(indentifier, text):
 	_debug_text_dict[indentifier] = text
 
 func add_draw_line(pos_a, pos_b, color = Color.DARK_RED):
-	_draw_lines.append({"pos_a": pos_a, "pos_b": pos_b, "color": color})
+	var line = {"pos_a": pos_a, "pos_b": pos_b, "color": color}
+	if !_draw_lines.has(line):
+		_draw_lines.append({"pos_a": pos_a, "pos_b": pos_b, "color": color})
 
 # A default function where you draw debug info
 func _draw():

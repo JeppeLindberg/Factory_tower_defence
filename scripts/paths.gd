@@ -16,7 +16,7 @@ func activate():
 func _process(_delta):
 	var child_index = 0
 	var offset_vector = Vector2.ONE
-	
+
 	for path in get_children():
 		for i in range(path.curve.point_count - 1):
 			_debug.add_draw_line(path.curve.get_point_position(i) + offset_vector * child_index, 
@@ -27,21 +27,19 @@ func _process(_delta):
 # Connect two coordinates with paths. Adapts to whatever situation is happening at the coordinates
 func connect_coords(from_coord, to_coord):
 	var merge_paths = _find_merge_paths(from_coord, to_coord)
-
 	if merge_paths:
 		_merge_paths(merge_paths[0], merge_paths[1])
 		return
 	
 	var append_path = _find_append_path(from_coord)
-
 	if append_path:
 		_append_to_path(append_path, to_coord)
 		return
 
 	var from_info = _terrain.get_cell(from_coord)
-
 	if from_info["building"] == null:
 		_start_new_path(from_coord, to_coord)
+		return
 
 # Find a path that can be appended to from the current coordinate
 func _find_append_path(last_coord):

@@ -2,7 +2,6 @@ extends Node2D
 
 var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
 
-
 var _main_scene
 var _terrain
 var _paths

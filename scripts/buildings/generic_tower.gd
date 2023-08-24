@@ -28,7 +28,7 @@ func activate():
 	_bullet_container = _root_node.get_node("bullet_container")
 	_range_area2d = _root_node.get_node("range")
 
-	_next_shot_time = _world_timer.seconds() + _tower_specific.shots_per_second / 1.0
+	_next_shot_time = _world_timer.seconds() + 1.0 / _tower_specific.shots_per_second
 
 func _process(_delta):
 	find_target()
@@ -38,11 +38,9 @@ func _process(_delta):
 		_next_shot_time = _world_timer.seconds()
 
 	elif _target != null:
-		# _debug.add_draw_line(_bullet_emitter.global_position, _target.global_position)
-
 		if _world_timer.seconds() >= _next_shot_time:
 			var charge_time = _world_timer.seconds() - _next_shot_time
-			_next_shot_time += _tower_specific.shots_per_second / 1.0
+			_next_shot_time += 1.0 / _tower_specific.shots_per_second
 			emit_bullet(charge_time)
 	
 # Find the enemy to shoot at. Currently just the closest.

@@ -33,6 +33,7 @@ func find_index_of_cell(coord):
 func spawn_building(building_name, building_info, coord):
 	var new_building = _main_scene.create_node(building_info["prefab_path"], _buildings)
 	new_building.building_name = building_name
+	new_building.footprint = Vector2i(building_info["footprint_x"], building_info["footprint_y"])
 
 	for x in building_info["footprint_x"]:
 		for y in building_info["footprint_y"]:

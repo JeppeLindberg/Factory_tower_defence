@@ -1,8 +1,10 @@
 extends Node2D
 
 var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
+var _groups := preload("res://scripts/library/groups.gd").new()
 
 @export var new_path_path: String
+@export var container_path: String
 
 var _main_scene
 var _terrain
@@ -13,16 +15,32 @@ func activate():
 	_terrain = get_node(_scene_paths.TERRAIN)
 	_debug = get_node(_scene_paths.DEBUG)
 
+# Debug reasons
 func _process(_delta):
 	var child_index = 0
 	var offset_vector = Vector2.ONE
 
-	for path in get_children():
+	for path in _main_scene.get_children_in_group(self, _groups.PATH):
 		for i in range(path.curve.point_count - 1):
 			_debug.add_draw_line(path.curve.get_point_position(i) + offset_vector * child_index, 
 				path.curve.get_point_position(i+1) + offset_vector * child_index,
 				lerp(Color.AQUA, Color.BLACK, float(i) / float(path.curve.point_count - 1)))
 		child_index += 1
+	
+	for container in _main_scene.get_children_in_group(self, _groups.CONTAINER):
+		_debug.add_draw_line(container.global_position + Vector2.UP * 5, 
+							container.global_position + Vector2.LEFT * 5, 
+							Color.GREEN)
+		_debug.add_draw_line(container.global_position + Vector2.LEFT * 5, 
+							container.global_position + Vector2.DOWN * 5, 
+							Color.GREEN)
+		_debug.add_draw_line(container.global_position + Vector2.DOWN * 5, 
+							container.global_position + Vector2.RIGHT * 5, 
+							Color.GREEN)
+		_debug.add_draw_line(container.global_position + Vector2.RIGHT * 5, 
+							container.global_position + Vector2.UP * 5, 
+							Color.GREEN)
+
 
 # Connect two coordinates with paths. Adapts to whatever situation is happening at the coordinates
 func connect_coords(from_coord, to_coord):
@@ -41,11 +59,17 @@ func connect_coords(from_coord, to_coord):
 		_start_new_path(from_coord, to_coord)
 		return
 
+# Create a node that describes a spot where resources can be deposited or retrieved
+func create_container(coord, _container):
+	var new_container = _main_scene.create_node(container_path, self)
+	new_container.add_to_group(_groups.CONTAINER)
+	new_container.global_position = _coord_to_center_pos(coord)
+
 # Find a path that can be appended to from the current coordinate
 func _find_append_path(last_coord):
 	var last_pos = _coord_to_center_pos(last_coord)
 
-	for path in get_children():
+	for path in _main_scene.get_children_in_group(self, _groups.PATH):
 		var last_point_index = path.curve.point_count - 1
 		if path.curve.get_point_position(last_point_index) == last_pos:
 			return path
@@ -58,7 +82,7 @@ func _find_merge_paths(from_coord, to_coord):
 	var to_pos = _coord_to_center_pos(to_coord)
 
 	var path_from_match_end = null
-	for path in get_children():
+	for path in _main_scene.get_children_in_group(self, _groups.PATH):
 		var last_point_index = path.curve.point_count - 1
 		if path.curve.get_point_position(last_point_index) == from_pos:
 			path_from_match_end = path
@@ -67,7 +91,7 @@ func _find_merge_paths(from_coord, to_coord):
 		return null
 	
 	var path_to_match_begin = null
-	for path in get_children():
+	for path in _main_scene.get_children_in_group(self, _groups.PATH):
 		if path.curve.get_point_position(0) == to_pos:
 			path_to_match_begin = path
 
@@ -95,6 +119,7 @@ func _start_new_path(from_coord, to_coord):
 	var to_pos = _coord_to_center_pos(to_coord)
 
 	var new_path: Path2D = _main_scene.create_node(new_path_path, self)
+	new_path.add_to_group(_groups.PATH)
 	new_path.curve = Curve2D.new()
 	new_path.curve.add_point(from_pos)
 	new_path.curve.add_point(to_pos)

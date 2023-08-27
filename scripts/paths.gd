@@ -29,18 +29,7 @@ func _process(_delta):
 		child_index += 1
 	
 	for container in _main_scene.get_children_in_group(self, _groups.CONTAINER):
-		_debug.add_draw_line(container.global_position + Vector2.UP * 5, 
-							container.global_position + Vector2.LEFT * 5, 
-							Color.GREEN)
-		_debug.add_draw_line(container.global_position + Vector2.LEFT * 5, 
-							container.global_position + Vector2.DOWN * 5, 
-							Color.GREEN)
-		_debug.add_draw_line(container.global_position + Vector2.DOWN * 5, 
-							container.global_position + Vector2.RIGHT * 5, 
-							Color.GREEN)
-		_debug.add_draw_line(container.global_position + Vector2.RIGHT * 5, 
-							container.global_position + Vector2.UP * 5, 
-							Color.GREEN)
+		_debug.add_draw_diamond(container.global_position, Color.GREEN)
 
 # Create a node that describes a spot where resources can be deposited or retrieved
 func create_container(coord, container):

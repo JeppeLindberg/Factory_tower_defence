@@ -23,6 +23,12 @@ func _process(_delta):
 func add_debug_text(indentifier, text):
 	_debug_text_dict[indentifier] = text
 
+func add_draw_diamond(pos, color = Color.DARK_RED):
+	add_draw_line(pos + Vector2.UP * 5, pos + Vector2.LEFT * 5, color)
+	add_draw_line(pos + Vector2.LEFT * 5, pos + Vector2.DOWN * 5, color)
+	add_draw_line(pos + Vector2.DOWN * 5, pos + Vector2.RIGHT * 5, color)
+	add_draw_line(pos + Vector2.RIGHT * 5, pos + Vector2.UP * 5, color)
+
 func add_draw_line(pos_a, pos_b, color = Color.DARK_RED):
 	var line = {"pos_a": pos_a, "pos_b": pos_b, "color": color}
 	if !_draw_lines.has(line):

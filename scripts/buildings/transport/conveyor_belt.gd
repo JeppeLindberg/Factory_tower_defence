@@ -19,12 +19,8 @@ func activate():
 	var this_coord = _main_scene.pos_to_cell_coord(global_position)
 	var next_coord = _main_scene.pos_to_cell_coord(global_position) + Vector2i.DOWN
 
-	connect_coords(prev_coord, this_coord)
-	connect_coords(this_coord, next_coord)
-
-
-# Connect the conveyor's path with new coordinates in the world
-func connect_coords(from_coord, to_coord):
-	_paths.connect_coords(from_coord, to_coord)
+	_paths.create_conveyor(this_coord, self)
+	_paths.connect_coords(prev_coord, this_coord)
+	_paths.connect_coords(this_coord, next_coord)
 
 

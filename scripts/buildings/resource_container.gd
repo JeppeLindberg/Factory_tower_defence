@@ -17,3 +17,7 @@ func activate():
 		for y in range(_root_node.footprint.y):
 			var offset = Vector2i(x, y)
 			_paths.create_container(_main_scene.pos_to_cell_coord(_root_node.global_position) + offset, self)
+
+# Set the path that picks from this container
+func add_picker(picker):
+	print("add_picker")

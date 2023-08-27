@@ -5,6 +5,7 @@ var _groups := preload("res://scripts/library/groups.gd").new()
 
 @export var new_path_path: String
 @export var container_path: String
+@export var conveyor_path: String
 
 var _main_scene
 var _terrain
@@ -41,80 +42,71 @@ func _process(_delta):
 							container.global_position + Vector2.UP * 5, 
 							Color.GREEN)
 
-
-# Connect two coordinates with paths. Adapts to whatever situation is happening at the coordinates
-func connect_coords(from_coord, to_coord):
-	var merge_paths = _find_merge_paths(from_coord, to_coord)
-	if merge_paths:
-		_merge_paths(merge_paths[0], merge_paths[1])
-		return
-	
-	var append_path = _find_append_path(from_coord)
-	if append_path:
-		_append_to_path(append_path, to_coord)
-		return
-
-	var from_info = _terrain.get_cell(from_coord)
-	if from_info["building"] == null:
-		_start_new_path(from_coord, to_coord)
-		return
-
 # Create a node that describes a spot where resources can be deposited or retrieved
-func create_container(coord, _container):
+func create_container(coord, container):
 	var new_container = _main_scene.create_node(container_path, self)
 	new_container.add_to_group(_groups.CONTAINER)
 	new_container.global_position = _coord_to_center_pos(coord)
+	new_container.container = container
 
-# Find a path that can be appended to from the current coordinate
-func _find_append_path(last_coord):
-	var last_pos = _coord_to_center_pos(last_coord)
+# Create a node that can transport resources between buildings
+func create_conveyor(coord, conveyor):
+	var new_conveyor = _main_scene.create_node(conveyor_path, self)
+	new_conveyor.add_to_group(_groups.CONVEYOR)
+	new_conveyor.global_position = _coord_to_center_pos(coord)
+	new_conveyor.conveyor = conveyor
 
-	for path in _main_scene.get_children_in_group(self, _groups.PATH):
-		var last_point_index = path.curve.point_count - 1
-		if path.curve.get_point_position(last_point_index) == last_pos:
-			return path
-	
-	return null
+# Connect two coordinates with paths. Adapts to whatever situation is happening at the coordinates
+func connect_coords(from_coord, to_coord):
+	var from_node = _find_transport_node(from_coord)
+	var to_node = _find_transport_node(to_coord)
 
-# Find paths that can be merged with the coming coordinates
-func _find_merge_paths(from_coord, to_coord):
-	var from_pos = _coord_to_center_pos(from_coord)
-	var to_pos = _coord_to_center_pos(to_coord)
+	if from_node == null or \
+		to_node == null:
+		return
 
-	var path_from_match_end = null
-	for path in _main_scene.get_children_in_group(self, _groups.PATH):
-		var last_point_index = path.curve.point_count - 1
-		if path.curve.get_point_position(last_point_index) == from_pos:
-			path_from_match_end = path
-	
-	if !path_from_match_end:
-		return null
-	
-	var path_to_match_begin = null
-	for path in _main_scene.get_children_in_group(self, _groups.PATH):
-		if path.curve.get_point_position(0) == to_pos:
-			path_to_match_begin = path
+	var new_path = _create_path(from_coord, to_coord)
 
-	if !path_to_match_begin:
-		return null
-	
-	return [path_from_match_end, path_to_match_begin]
+	if from_node.is_in_group(_groups.CONTAINER):
+		from_node.container.add_picker(new_path)
+		new_path.container = from_node.container
 
-# Add to an existing path
-func _append_to_path(path, to_coord):
-	var to_pos = _coord_to_center_pos(to_coord)
+	_merge_all_paths()
 
-	path.curve.add_point(to_pos)
+# Merge all paths in the system
+func _merge_all_paths():
+	var repeat = true
+
+	while repeat:
+		repeat = false
+
+		for path_end in _main_scene.get_children_in_group(self, _groups.PATH):
+			if repeat:
+				break
+
+			for path_begin in _main_scene.get_children_in_group(self, _groups.PATH):
+				if repeat:
+					break
+
+				var end_index = path_end.curve.point_count - 1
+				var begin_index = 0
+
+				if path_end.curve.get_point_position(end_index) == path_begin.curve.get_point_position(begin_index):
+					_merge_paths(path_end, path_begin)
+					repeat = true
 
 # Add path_b curve to path_a, and delete path_b
 func _merge_paths(path_a, path_b):
 	for i in range(path_b.curve.point_count):
 		path_a.curve.add_point(path_b.curve.get_point_position(i))
 	
+	if path_b.container:
+		path_b.container.add_picker(path_a)
+
 	path_b.queue_free()
 
 # Called when a new path is created, and instantiates it correctly
-func _start_new_path(from_coord, to_coord):
+func _create_path(from_coord, to_coord):
 	var from_pos = _coord_to_center_pos(from_coord)
 	var to_pos = _coord_to_center_pos(to_coord)
 
@@ -124,7 +116,18 @@ func _start_new_path(from_coord, to_coord):
 	new_path.curve.add_point(from_pos)
 	new_path.curve.add_point(to_pos)
 
+	return new_path
+
 # Find the position of the center of a cell based on its coordinates
 func _coord_to_center_pos(coord):
 	var pos = _main_scene.cell_coord_to_pos(coord) + _main_scene.quadrant_size() * 0.5
 	return pos
+
+# Finds a transport node (container/conveyor) on the given position
+func _find_transport_node(coord):
+	var pos = _coord_to_center_pos(coord)
+	for child in get_children():
+		if child.global_position == pos:
+			return child
+	
+	return null

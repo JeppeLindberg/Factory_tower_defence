@@ -9,3 +9,4 @@ const BUILDING: String = "building"
 # Path groups
 const PATH: String = "path"
 const CONTAINER: String = "container"
+const CONVEYOR: String = "conveyor"

@@ -24,7 +24,7 @@ func activate():
 	_terrain = get_node(_scene_paths.TERRAIN)
 	_enemies = _terrain.get_node("enemies")
 
-	_next_event_timer = _world_timer.seconds() + 2
+	_next_event_timer = _world_timer.seconds() + 30
 
 	_state = _tower_defence_states.WAITING_FOR_NEXT_WAVE
 

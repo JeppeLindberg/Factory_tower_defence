@@ -6,6 +6,7 @@ var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
 var _main_scene
 var _debug
 
+var time_mult = 1.0
 var _seconds = 0
 var _state 
 
@@ -24,8 +25,10 @@ func _process(delta):
 func toggle_pause():
 	if _state == _timer_states.PLAYING:
 		_state = _timer_states.PAUSED
+		time_mult = 0.0
 	elif _state == _timer_states.PAUSED:
 		_state = _timer_states.PLAYING
+		time_mult = 1.0
 
 # Stop the timer. It cannot be un-stopped
 func stop():

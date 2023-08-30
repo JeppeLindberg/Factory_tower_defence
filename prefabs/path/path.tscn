@@ -7,3 +7,4 @@
 [node name="path" type="Path2D"]
 curve = SubResource("Curve2D_ygq6l")
 script = ExtResource("1_2ajir")
+path_follow_path = "res://prefabs/path/path_follow.tscn"

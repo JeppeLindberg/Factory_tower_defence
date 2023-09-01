@@ -16,7 +16,7 @@ func _ready():
     _main_scene = get_node(_scene_paths.MAIN_SCENE)
     _world_timer = get_node(_scene_paths.WORLD_TIMER)
 
-    var scalar = (_main_scene.quadrant_size().x + _main_scene.quadrant_size().x) / 2
+    var scalar = (_main_scene.quadrant_size().x + _main_scene.quadrant_size().y) / 2
     _resource_node_radius = _resource_node_radius * scalar
     _path_move_speed = _path_move_speed * scalar
 

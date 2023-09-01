@@ -11,6 +11,7 @@ var _debug
 var current_building = null
 var current_building_name = null
 var resources = 200
+var rotation_angle = 0
 
 
 func activate():
@@ -44,6 +45,9 @@ func place_current_building_at_coord(coord):
 	if resources < current_building["cost"]:
 		return
 	
-	_terrain.spawn_building(current_building_name, current_building, coord)
+	_terrain.spawn_building(current_building_name, current_building, coord, rotation_angle)
 	resources -= current_building["cost"]
+
+func rotate_placement():
+	rotation_angle += 90
 

@@ -16,7 +16,7 @@ resource_path = "res://prefabs/resource_types/iron.tscn"
 [node name="specific_building" type="Node2D" parent="generic_building"]
 script = ExtResource("3_aypjq")
 
-[node name="base" type="Sprite2D" parent="."]
+[node name="sprite" type="Sprite2D" parent="."]
 position = Vector2(32, 32)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_ep52y")

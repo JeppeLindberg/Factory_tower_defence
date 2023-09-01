@@ -28,3 +28,6 @@ func _unhandled_input(event):
 	
 	if event.is_action_pressed("pause_play"):
 		_world_timer.toggle_pause()
+	
+	if event.is_action_pressed("rotate"):
+		_building_placement.rotate_placement()

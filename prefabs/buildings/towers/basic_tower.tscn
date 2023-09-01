@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://dxx5yshhuswe3"]
 
 [ext_resource type="Script" path="res://scripts/building.gd" id="1_3mwbs"]
 [ext_resource type="Script" path="res://scripts/buildings/generic_tower.gd" id="2_qq7o4"]
@@ -21,7 +21,7 @@ script = ExtResource("3_yijg2")
 [node name="bullet_emitter" type="Node2D" parent="."]
 position = Vector2(16, 16)
 
-[node name="base" type="Sprite2D" parent="."]
+[node name="sprite" type="Sprite2D" parent="."]
 modulate = Color(0.313726, 0.811765, 0.94902, 1)
 position = Vector2(16, 16)
 texture = ExtResource("4_rta5u")

@@ -62,10 +62,14 @@ func get_random_element(options):
 	var index = randi() % options.size()
 	return options[index]
 
-# Get all children of the node that belongs to the given group
-func get_children_in_group(node, group):
+# Get all children of the node that belongs to one or more of the the given groups
+func get_children_in_groups(node, groups):
 	var result = []
+
 	for child in node.get_children():
-		if child.is_in_group(group):
-			result.append(child)
+		for group in groups:				
+			if child.is_in_group(group):
+				result.append(child)
+				break				
+
 	return result

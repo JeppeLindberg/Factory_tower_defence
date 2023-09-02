@@ -6,10 +6,12 @@ var _groups := preload("res://scripts/library/groups.gd").new()
 @export var new_path_path: String
 @export var container_path: String
 @export var conveyor_path: String
+@export var placer_path: String
 
 var _main_scene
 var _terrain
 var _debug
+
 
 func activate():
 	_main_scene = get_node(_scene_paths.MAIN_SCENE)
@@ -21,15 +23,18 @@ func _process(_delta):
 	var child_index = 0
 	var offset_vector = Vector2.ONE
 
-	for path in _main_scene.get_children_in_group(self, _groups.PATH):
+	for path in _main_scene.get_children_in_groups(self, [_groups.PATH]):
 		for i in range(path.curve.point_count - 1):
 			_debug.add_draw_line(path.curve.get_point_position(i) + offset_vector * child_index, 
 				path.curve.get_point_position(i+1) + offset_vector * child_index,
 				lerp(Color.AQUA, Color.BLACK, float(i) / float(path.curve.point_count - 1)))
 		child_index += 1
 	
-	for container in _main_scene.get_children_in_group(self, _groups.CONTAINER):
+	for container in _main_scene.get_children_in_groups(self, [_groups.CONTAINER]):
 		_debug.add_draw_diamond(container.global_position, Color.GREEN)
+	
+	for container in _main_scene.get_children_in_groups(self, [_groups.PLACER]):
+		_debug.add_draw_diamond(container.global_position, Color.ORANGE)
 
 # Create a node that describes a spot where resources can be deposited or retrieved
 func create_container(coord, container):
@@ -47,21 +52,27 @@ func create_conveyor(coord, conveyor):
 
 # Connect two coordinates with paths. Adapts to whatever situation is happening at the coordinates
 func connect_conveyors(from_coord, to_coord):
-	var from_node = _find_transport_node(from_coord)
-	var to_node = _find_transport_node(to_coord)
+	var from_node = _find_transport_node(from_coord, [_groups.CONVEYOR])
+	var to_node = _find_transport_node(to_coord, [_groups.CONVEYOR])
 
 	if from_node == null or \
 		to_node == null:
 		return
+	
+	if not (from_node.conveyor.facing() == to_node.conveyor.facing()):
+		return
 
-	if from_node.is_in_group(_groups.CONVEYOR) and \
-		to_node.is_in_group(_groups.CONVEYOR):
-		_create_path(from_coord, to_coord)
-		_merge_all_paths()
+	_create_path(from_coord, to_coord)
+	_merge_all_paths()
+
+# Connect all pickers and placers
+func autoconnect_all():
+	_connect_all_pickers()
+	_connect_all_placers()
 
 # Connect all containers to adjacant conveyors that point away from the container
-func connect_all_containers():
-	for container in _main_scene.get_children_in_group(self, _groups.CONTAINER):
+func _connect_all_pickers():
+	for container in _main_scene.get_children_in_groups(self, [_groups.CONTAINER]):
 		var container_coord = _center_pos_to_coord(container.global_position)
 
 		var neighbour_coords = [container_coord + Vector2i.UP,
@@ -72,7 +83,7 @@ func connect_all_containers():
 		var neighbour_nodes = []
 
 		for coord in neighbour_coords:
-			neighbour_nodes.append(_find_transport_node(coord))	
+			neighbour_nodes.append(_find_transport_node(coord, [_groups.CONVEYOR]))
 
 		for i in range(len(neighbour_coords)):
 			var neighbour_node = neighbour_nodes[i]
@@ -81,13 +92,42 @@ func connect_all_containers():
 			if neighbour_node == null:
 				continue
 
-			if neighbour_node.is_in_group(_groups.CONVEYOR):
-				if neighbour_node.conveyor.facing() == container_coord - neighbour_coord:
-					if not _connection_exists(container_coord, neighbour_coord):
-						var new_path = _create_path(container_coord, neighbour_coord)
-						container.container.add_picker(new_path)
-						new_path.container = container.container
+			if neighbour_node.conveyor.facing() == container_coord - neighbour_coord:
+				if not _connection_exists(container_coord, neighbour_coord):
+					var new_path = _create_path(container_coord, neighbour_coord)
+					container.container.add_picker(new_path)
+					new_path.container = container.container
 	
+	_merge_all_paths()
+
+# Connects all path ends with a placer if the end of the path ends in a placeable object
+func _connect_all_placers():
+	for path in _main_scene.get_children_in_groups(self, [_groups.PATH]):
+		var last_index = path.curve.point_count - 1
+
+		var second_last_coord_in_path = _center_pos_to_coord(path.curve.get_point_position(last_index - 1))
+		var last_coord_in_path = _center_pos_to_coord(path.curve.get_point_position(last_index))
+		var facing_vec = last_coord_in_path - second_last_coord_in_path
+
+		var coord_after_path = last_coord_in_path + facing_vec
+
+		if _connection_exists(last_coord_in_path, coord_after_path):
+			continue
+
+		var after_coord_node = _find_transport_node(coord_after_path, [_groups.CONVEYOR])
+
+		if after_coord_node == null:
+			continue
+
+		if after_coord_node.is_in_group(_groups.CONVEYOR):
+			if not (after_coord_node.conveyor.facing() == facing_vec or \
+				after_coord_node.conveyor.facing() == -facing_vec):
+				# If the conveyor is facing to the left or right of the last path coordinates
+
+				var new_path = _create_path(last_coord_in_path, coord_after_path)
+				var new_placer = _create_placer(coord_after_path)
+				new_path.set_placer(new_placer)
+
 	_merge_all_paths()
 
 # Merge all paths in the system
@@ -97,20 +137,26 @@ func _merge_all_paths():
 	while repeat:
 		repeat = false
 
-		for path_end in _main_scene.get_children_in_group(self, _groups.PATH):
+		for path_end in _main_scene.get_children_in_groups(self, [_groups.PATH]):
 			if repeat:
 				break
 
-			for path_begin in _main_scene.get_children_in_group(self, _groups.PATH):
+			for path_begin in _main_scene.get_children_in_groups(self, [_groups.PATH]):
 				if repeat:
 					break
 
 				var end_index = path_end.curve.point_count - 1
 				var begin_index = 0
 
-				if path_end.curve.get_point_position(end_index) == path_begin.curve.get_point_position(begin_index):
-					_merge_paths(path_end, path_begin)
-					repeat = true
+				var end_pos = path_end.curve.get_point_position(end_index)
+				var begin_pos = path_begin.curve.get_point_position(begin_index)
+
+				if end_pos == begin_pos:
+					var node = _find_transport_node(_center_pos_to_coord(end_pos), [_groups.PLACER])
+					
+					if node == null:
+						_merge_paths(path_end, path_begin)
+						repeat = true
 
 # Add path_b curve to path_a, and delete path_b
 func _merge_paths(path_a, path_b):
@@ -118,6 +164,7 @@ func _merge_paths(path_a, path_b):
 		path_a.curve.add_point(path_b.curve.get_point_position(i))
 	
 	if path_b.container:
+		# TODO: Remove path_b as a picker for the container
 		path_b.container.add_picker(path_a)
 
 	path_b.queue_free()
@@ -135,12 +182,18 @@ func _create_path(from_coord, to_coord):
 
 	return new_path
 
+func _create_placer(coord):
+	var new_placer = _main_scene.create_node(placer_path, self)
+	new_placer.add_to_group(_groups.PLACER)
+	new_placer.global_position = _coord_to_center_pos(coord)
+	return new_placer
+
 # Checks wether two coordinates are already connected by a path
 func _connection_exists(coord_from, coord_to):
 	var pos_from = _coord_to_center_pos(coord_from)
 	var pos_to = _coord_to_center_pos(coord_to)
 
-	for path in _main_scene.get_children_in_group(self, _groups.PATH):
+	for path in _main_scene.get_children_in_groups(self, [_groups.PATH]):
 		for i in range(path.curve.point_count - 1):
 			if path.curve.get_point_position(i) == pos_from and path.curve.get_point_position(i+1) == pos_to:
 				return true
@@ -157,9 +210,10 @@ func _center_pos_to_coord(pos):
 	return _main_scene.pos_to_coord(pos)
 
 # Finds a transport node (container/conveyor) on the given position
-func _find_transport_node(coord):
+func _find_transport_node(coord, target_groups):
 	var pos = _coord_to_center_pos(coord)
-	for child in get_children():
+	
+	for child in _main_scene.get_children_in_groups(self, target_groups):
 		if child.global_position == pos:
 			return child
 	

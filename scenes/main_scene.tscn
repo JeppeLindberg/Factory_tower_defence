@@ -98,6 +98,7 @@ script = ExtResource("11_lqva3")
 new_path_path = "res://prefabs/path/path.tscn"
 container_path = "res://prefabs/path/container.tscn"
 conveyor_path = "res://prefabs/path/conveyor.tscn"
+placer_path = "res://prefabs/path/placer.tscn"
 
 [node name="controller" type="Node2D" parent="."]
 script = ExtResource("1_v354r")

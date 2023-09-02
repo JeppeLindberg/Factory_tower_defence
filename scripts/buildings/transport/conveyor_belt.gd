@@ -28,7 +28,7 @@ func activate():
 	_paths.connect_conveyors(prev_coord, this_coord)
 	_paths.connect_conveyors(this_coord, next_coord)
 
-	_paths.connect_all_containers()
+	_paths.autoconnect_all()
 
 # Get the facing of the conveyor belt as a vector
 func facing():

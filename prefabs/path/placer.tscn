@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://dg4r20ivli11b"]
+
+[node name="placer" type="Node2D"]

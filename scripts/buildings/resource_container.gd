@@ -21,7 +21,7 @@ func activate():
 			var offset = Vector2i(x, y)
 			_paths.create_container(_main_scene.pos_to_coord(_root_node.global_position) + offset, self)
 	
-	_paths.connect_all_containers()
+	_paths.autoconnect_all()
 
 func _process(_delta):
 	if _pickers.is_empty():

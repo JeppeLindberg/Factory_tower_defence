@@ -8,6 +8,7 @@ var _main_scene
 var _world_timer
 
 var container
+var placer
 var _resource_node_radius = 0.2 # Scaled with the size of tiles
 var _path_move_speed = 2.0 # Tiles per second
 
@@ -49,6 +50,10 @@ func check_can_recieve_at_pos(pos):
         return false
     
     return true
+
+# Sets the placer for placing items on at the end of the path
+func set_placer(new_placer):
+    placer = new_placer
 
 # Finds the point on the curve that is closest to "pos", and translates that to a "progress" property
 func _pos_to_progress(pos):

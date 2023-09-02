@@ -41,5 +41,5 @@ func spawn_building(building_name, building_info, coord, rotation_angle):
 			_cells[index]["building"] = new_building
 			_cells[index]["state"] = [_cell_states.OCCUPIED]
 	
-	new_building.initialize(_main_scene.cell_coord_to_pos(coord), rotation_angle)
+	new_building.initialize(_main_scene.coord_to_pos(coord), rotation_angle)
 

@@ -28,7 +28,7 @@ func activate():
 func _create_behavour_nodes():
 	for cell_coord in used_cell_coords:
 		var data: TileData = get_cell_tile_data(0, cell_coord)
-		var cell_pos = _main_scene.cell_coord_to_pos(cell_coord)
+		var cell_pos = _main_scene.coord_to_pos(cell_coord)
 		
 		var type = data.get_custom_data("type")
 		if type:

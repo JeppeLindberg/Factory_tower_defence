@@ -19,7 +19,9 @@ func activate():
 	for x in range(_root_node.footprint.x):
 		for y in range(_root_node.footprint.y):
 			var offset = Vector2i(x, y)
-			_paths.create_container(_main_scene.pos_to_cell_coord(_root_node.global_position) + offset, self)
+			_paths.create_container(_main_scene.pos_to_coord(_root_node.global_position) + offset, self)
+	
+	_paths.connect_all_containers()
 
 func _process(_delta):
 	if _pickers.is_empty():

@@ -39,13 +39,13 @@ func quadrant_size():
 	return Vector2(_map.cell_quadrant_size, _map.cell_quadrant_size)
 
 # Transform an in-engine position to a location on the cell coordinates
-func pos_to_cell_coord(pos):
+func pos_to_coord(pos):
 	var quad_size = quadrant_size()
 
 	return Vector2i(pos.x / quad_size.x, pos.y / quad_size.y)
 
 # Transform a location on the cell coordinates to an in-engine position
-func cell_coord_to_pos(coord):
+func coord_to_pos(coord):
 	var quad_size = quadrant_size()
 
 	return Vector2(coord.x * quad_size.x, coord.y * quad_size.y)

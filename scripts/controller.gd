@@ -22,7 +22,7 @@ func _unhandled_input(event):
 		event_pos -= Vector2((footprint_x - 1) * (_main_scene.quadrant_size().x / 2),
 								(footprint_y - 1) * (_main_scene.quadrant_size().y / 2))
 
-		var tile_pos = _main_scene.pos_to_cell_coord(event_pos)
+		var tile_pos = _main_scene.pos_to_coord(event_pos)
 		
 		_building_placement.place_current_building_at_coord(tile_pos)
 	

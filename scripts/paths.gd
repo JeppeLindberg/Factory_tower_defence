@@ -46,7 +46,7 @@ func create_conveyor(coord, conveyor):
 	new_conveyor.conveyor = conveyor
 
 # Connect two coordinates with paths. Adapts to whatever situation is happening at the coordinates
-func connect_coords(from_coord, to_coord):
+func connect_conveyors(from_coord, to_coord):
 	var from_node = _find_transport_node(from_coord)
 	var to_node = _find_transport_node(to_coord)
 
@@ -54,12 +54,40 @@ func connect_coords(from_coord, to_coord):
 		to_node == null:
 		return
 
-	var new_path = _create_path(from_coord, to_coord)
+	if from_node.is_in_group(_groups.CONVEYOR) and \
+		to_node.is_in_group(_groups.CONVEYOR):
+		_create_path(from_coord, to_coord)
+		_merge_all_paths()
 
-	if from_node.is_in_group(_groups.CONTAINER):
-		from_node.container.add_picker(new_path)
-		new_path.container = from_node.container
+# Connect all containers to adjacant conveyors that point away from the container
+func connect_all_containers():
+	for container in _main_scene.get_children_in_group(self, _groups.CONTAINER):
+		var container_coord = _center_pos_to_coord(container.global_position)
 
+		var neighbour_coords = [container_coord + Vector2i.UP,
+			container_coord + Vector2i.RIGHT, 
+			container_coord + Vector2i.DOWN, 
+			container_coord + Vector2i.LEFT]
+		
+		var neighbour_nodes = []
+
+		for coord in neighbour_coords:
+			neighbour_nodes.append(_find_transport_node(coord))	
+
+		for i in range(len(neighbour_coords)):
+			var neighbour_node = neighbour_nodes[i]
+			var neighbour_coord = neighbour_coords[i]
+
+			if neighbour_node == null:
+				continue
+
+			if neighbour_node.is_in_group(_groups.CONVEYOR):
+				if neighbour_node.conveyor.facing() == container_coord - neighbour_coord:
+					if not _connection_exists(container_coord, neighbour_coord):
+						var new_path = _create_path(container_coord, neighbour_coord)
+						container.container.add_picker(new_path)
+						new_path.container = container.container
+	
 	_merge_all_paths()
 
 # Merge all paths in the system
@@ -107,10 +135,26 @@ func _create_path(from_coord, to_coord):
 
 	return new_path
 
+# Checks wether two coordinates are already connected by a path
+func _connection_exists(coord_from, coord_to):
+	var pos_from = _coord_to_center_pos(coord_from)
+	var pos_to = _coord_to_center_pos(coord_to)
+
+	for path in _main_scene.get_children_in_group(self, _groups.PATH):
+		for i in range(path.curve.point_count - 1):
+			if path.curve.get_point_position(i) == pos_from and path.curve.get_point_position(i+1) == pos_to:
+				return true
+	
+	return false
+
 # Find the position of the center of a cell based on its coordinates
 func _coord_to_center_pos(coord):
-	var pos = _main_scene.cell_coord_to_pos(coord) + _main_scene.quadrant_size() * 0.5
+	var pos = _main_scene.coord_to_pos(coord) + _main_scene.quadrant_size() * 0.5
 	return pos
+
+# Find the position of the center of a cell based on its coordinates
+func _center_pos_to_coord(pos):
+	return _main_scene.pos_to_coord(pos)
 
 # Finds a transport node (container/conveyor) on the given position
 func _find_transport_node(coord):

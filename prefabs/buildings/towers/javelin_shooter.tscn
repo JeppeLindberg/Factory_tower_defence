@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dvhabtk8hf3fi"]
+[gd_scene load_steps=7 format=3 uid="uid://dvhabtk8hf3fi"]
 
 [ext_resource type="Script" path="res://scripts/buildings/generic_tower.gd" id="1_bppie"]
 [ext_resource type="Script" path="res://scripts/building.gd" id="1_rnifl"]
 [ext_resource type="Script" path="res://scripts/buildings/towers/javelin_shooter.gd" id="2_lrfc8"]
 [ext_resource type="Texture2D" uid="uid://dhjv6udmuj53l" path="res://sprites/buildings/tower_base.png" id="4_xwimb"]
+[ext_resource type="Script" path="res://scripts/buildings/resource_container.gd" id="5_st2o3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_60yd6"]
 radius = 232.106
@@ -22,7 +23,7 @@ footprint = Vector2i(2, 2)
 [node name="bullet_emitter" type="Node2D" parent="."]
 position = Vector2(32, 32)
 
-[node name="base" type="Sprite2D" parent="."]
+[node name="sprite" type="Sprite2D" parent="."]
 position = Vector2(32, 32)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("4_xwimb")
@@ -34,3 +35,6 @@ position = Vector2(32, 32)
 shape = SubResource("CircleShape2D_60yd6")
 
 [node name="bullet_container" type="Node2D" parent="."]
+
+[node name="resource_container" type="Node2D" parent="."]
+script = ExtResource("5_st2o3")

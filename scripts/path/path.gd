@@ -53,12 +53,16 @@ func receive_resource(resource, pos):
 
 # Check if the given position is occupied or otherwise unavailable
 func check_can_recieve_at_pos(pos):
-	var prog = _pos_to_progress(pos)
-	var next_unoccupied_progress = _get_next_unoccupied_progress(prog)
-	
-	if next_unoccupied_progress - _resource_node_radius < prog:
+	var progress = _pos_to_progress(pos)
+	var closest_progress = 10000.0
+
+	for path_follow in get_children():
+		if abs(path_follow.progress - progress) < closest_progress:
+			closest_progress = abs(path_follow.progress - progress)
+
+	if closest_progress < _resource_node_radius:
 		return false
-	
+
 	return true
 
 # Sets the placer for placing items on at the end of the path

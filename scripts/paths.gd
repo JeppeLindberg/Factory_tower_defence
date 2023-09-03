@@ -7,6 +7,7 @@ var _groups := preload("res://scripts/library/groups.gd").new()
 @export var container_path: String
 @export var conveyor_path: String
 @export var path_placer_path: String
+@export var container_placer_path: String
 
 var _main_scene
 var _terrain
@@ -103,6 +104,9 @@ func _connect_all_pickers():
 # Connects all path ends with a placer if the end of the path ends in a placeable object
 func _connect_all_placers():
 	for path in _main_scene.get_children_in_groups(self, [_groups.PATH]):
+		if path.placer != null:
+			continue
+
 		var last_index = path.curve.point_count - 1
 
 		var second_last_coord_in_path = _center_pos_to_coord(path.curve.get_point_position(last_index - 1))
@@ -124,15 +128,13 @@ func _connect_all_placers():
 				after_coord_node.conveyor.facing() == -facing_vec):
 				# If the conveyor is facing to the left or right of the last path coordinates
 
-				var after_coord_path = _find_path_at_coord(coord_after_path)
 				var new_path = _create_path(last_coord_in_path, coord_after_path)
 				var new_placer = _create_path_placer(coord_after_path)
 				new_path.set_placer(new_placer)
-				new_placer.path = after_coord_path
 
-		elif after_coord_node.is_in_group(_groups.CONVEYOR):
+		elif after_coord_node.is_in_group(_groups.CONTAINER):
 			var new_path = _create_path(last_coord_in_path, coord_after_path)
-			var new_placer = _create_path_placer(coord_after_path)
+			var new_placer = _create_container_placer(coord_after_path)
 			new_path.set_placer(new_placer)
 
 	_merge_all_paths()
@@ -198,6 +200,13 @@ func _create_path_placer(coord):
 	new_placer.add_to_group(_groups.PLACER)
 	new_placer.global_position = _coord_to_center_pos(coord)
 	return new_placer
+	
+# Create a placer to place resources in a container
+func _create_container_placer(coord):
+	var new_placer = _main_scene.create_node(container_placer_path, self)
+	new_placer.add_to_group(_groups.PLACER)
+	new_placer.global_position = _coord_to_center_pos(coord)
+	return new_placer
 
 # Checks whether two coordinates are already connected by a path
 func _connection_exists(coord_from, coord_to):
@@ -220,6 +229,9 @@ func _coord_to_center_pos(coord):
 func _center_pos_to_coord(pos):
 	return _main_scene.pos_to_coord(pos)
 
+func find_transport_node_at_pos(pos, target_groups):
+	return _find_transport_node(_center_pos_to_coord(pos), target_groups)
+
 # Finds a transport node (container/conveyor) on the given position
 func _find_transport_node(coord, target_groups):
 	var pos = _coord_to_center_pos(coord)
@@ -231,9 +243,7 @@ func _find_transport_node(coord, target_groups):
 	return null
 
 # Finds a path that moves across the given coordinate. Ignores path ends.
-func _find_path_at_coord(coord):
-	var pos = _coord_to_center_pos(coord)
-
+func find_path_at_center_pos(pos):
 	for path in _main_scene.get_children_in_groups(self, [_groups.PATH]):
 		for i in range(path.curve.point_count - 1):
 			if path.curve.get_point_position(i) == pos:

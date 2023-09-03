@@ -1,5 +1,5 @@
 extends Node2D
 
 
-var resources_per_second = 2.0
+var resources_per_second = 1.0
 

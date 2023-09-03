@@ -46,3 +46,12 @@ func _process(_delta):
 # Set the path that picks from this container
 func add_picker(picker):
 	_pickers.append(picker)
+
+# Check wether the container can recieve a resource
+func can_recieve_resource():
+	return true
+
+# Put a given resource into the container
+func receive_resource(resource):
+	resource.reparent(self)
+	resource.position = Vector2.ZERO

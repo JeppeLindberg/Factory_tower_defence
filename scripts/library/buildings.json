@@ -1,6 +1,6 @@
 {
-    "javelin_shooter": {
-        "prefab_path": "res://prefabs/buildings/towers/javelin_shooter.tscn",
+    "slag_shooter": {
+        "prefab_path": "res://prefabs/buildings/towers/slag_shooter.tscn",
         "sprite_path": "res://sprites/buildings/tower_base.png",
         "cost": 20,
         "footprint_x": 2,

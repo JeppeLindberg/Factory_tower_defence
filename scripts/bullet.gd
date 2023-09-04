@@ -10,16 +10,21 @@ var _collider
 var _debug
 
 var _next_position
+var _initial_pos
 var _direction
+var _move_range
 
 
-func initialize(initial_pos, target_node, charge_time):
+func initialize(initial_pos, direction, charge_time, move_range):
 	_collider = get_node("collider")
 	_debug = get_node(_scene_paths.DEBUG)
 	global_position = initial_pos
 	_next_position = initial_pos
-	_direction = (target_node.global_position - global_position)
+	_direction = direction
 	_direction = _direction / _direction.length()
+	_initial_pos = initial_pos
+	_move_range = move_range
+
 	_progress_time(charge_time)
 
 func _process(delta):
@@ -49,6 +54,9 @@ func _physics_process(_delta):
 			if node.is_in_group(_groups.ENEMY):
 				collide_with_enemy(node)
 				return
+
+	if global_position.distance_to(_initial_pos) > _move_range:
+		queue_free()
 
 # Collide with an enemy, and handle all the following results
 func collide_with_enemy(enemy_node):

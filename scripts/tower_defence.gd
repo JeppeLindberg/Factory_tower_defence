@@ -40,7 +40,7 @@ func _process(_delta):
 		if _state == _tower_defence_states.ONGOING_WAVE:
 			spawn_enemy()
 			if _remaining_enemy_spawns <= 0:
-				_next_event_timer += 10.0
+				_next_event_timer += 30.0
 				change_state(_tower_defence_states.WAITING_FOR_NEXT_WAVE)
 			else:
 				_next_event_timer += 0.1
@@ -59,5 +59,10 @@ func take_damage():
 	_remaining_health -= 1
 	if _remaining_health == 0:
 		_world_timer.stop()
+
+# Skip to the next wave, mostly for debug reasons
+func skip_to_next_wave():
+	if _state == _tower_defence_states.WAITING_FOR_NEXT_WAVE:
+		_next_event_timer = _world_timer.seconds()
 
 

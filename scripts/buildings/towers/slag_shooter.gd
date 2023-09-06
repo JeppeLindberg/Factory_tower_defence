@@ -30,9 +30,11 @@ func shoot(target, charge_time):
 		var diversion_angle = randf_range(0, accuracy * 2) - accuracy
 
 		direction = direction.rotated(deg_to_rad(diversion_angle))
+		# TODO: Assign damage based on power of the resource consumed
 		new_bullet.initialize(start_pos, direction, charge_time, move_range)
 
 # Convert from number of cells to pixels
 func get_range_as_pixels():
 	var quadrant_size = _main_scene.quadrant_size()
 	return targeting_range * (quadrant_size.x + quadrant_size.y) / 2
+

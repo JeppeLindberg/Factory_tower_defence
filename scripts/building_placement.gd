@@ -18,7 +18,7 @@ func activate():
 	_main_scene = get_node(_scene_paths.MAIN_SCENE)
 	_terrain = get_node(_scene_paths.TERRAIN)
 	_debug = get_node(_scene_paths.DEBUG)
-	set_current_building("drill_1")
+	set_current_building("stone_drill")
 
 func _process(_delta):
 	_debug.add_debug_text("resources", resources)

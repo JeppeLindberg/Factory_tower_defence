@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://djj280d162hxk"
-path="res://.godot/imported/drill_1.png-2361e4cb2678530c8a2e7a95d2d9656a.ctex"
+path="res://.godot/imported/stone_drill.png-38a93a870b41c4d4390901c21178705a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/buildings/drill_1.png"
-dest_files=["res://.godot/imported/drill_1.png-2361e4cb2678530c8a2e7a95d2d9656a.ctex"]
+source_file="res://sprites/buildings/stone_drill.png"
+dest_files=["res://.godot/imported/stone_drill.png-38a93a870b41c4d4390901c21178705a.ctex"]
 
 [params]
 

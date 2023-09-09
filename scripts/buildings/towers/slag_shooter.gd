@@ -1,6 +1,7 @@
 extends Node2D
 
 var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
+var _power_types := preload("res://scripts/library/power_types.gd").new()
 
 @export var footprint: Vector2i
 @export var shots_per_second = 1.0
@@ -23,6 +24,8 @@ func _ready():
 func shoot(target, charge_time):
 	var start_pos = _tower_generic.bullet_emitter.global_position
 	var move_range = get_range_as_pixels() * 1.25
+	var resource = _tower_generic.resource_container.select_pick_resource()
+	var damage = _get_damage(resource.get_power())
 
 	for i in range(bullet_split):
 		var new_bullet = _main_scene.create_node(bullet_path, _tower_generic.bullet_container)
@@ -30,11 +33,22 @@ func shoot(target, charge_time):
 		var diversion_angle = randf_range(0, accuracy * 2) - accuracy
 
 		direction = direction.rotated(deg_to_rad(diversion_angle))
-		# TODO: Assign damage based on power of the resource consumed
-		new_bullet.initialize(start_pos, direction, charge_time, move_range)
+		new_bullet.initialize(start_pos, direction, charge_time, move_range, damage)
+	
+	resource.queue_free()
 
 # Convert from number of cells to pixels
 func get_range_as_pixels():
 	var quadrant_size = _main_scene.quadrant_size()
 	return targeting_range * (quadrant_size.x + quadrant_size.y) / 2
+
+# Transforms the power stats of a resource into the damage of a bullet
+func _get_damage(power):
+	var result = 0
+
+	for key in power:
+		if key == _power_types.KINETIC:
+			result += power[key] * kinetic_power_mult
+	
+	return result
 

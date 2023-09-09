@@ -15,7 +15,7 @@ script = ExtResource("1_xr7jb")
 [node name="generic_building" type="Node2D" parent="."]
 script = ExtResource("2_b65io")
 
-[node name="specific_building" type="Node2D" parent="generic_building"]
+[node name="specific_tower" type="Node2D" parent="generic_building"]
 script = ExtResource("3_7a827")
 footprint = Vector2i(2, 2)
 shots_per_second = 3.0

@@ -39,7 +39,7 @@ func _process(_delta):
 		var deposit_pos = _pickers[index].curve.get_point_position(0)
 
 		if _pickers[index].check_can_recieve_at_pos(deposit_pos):
-			_pickers[index].receive_resource(get_children()[0], deposit_pos)
+			_pickers[index].receive_resource(select_pick_resource(), deposit_pos)
 			_active_picker -= 1
 			_active_picker = _active_picker % len(_pickers)
 
@@ -55,3 +55,14 @@ func can_recieve_resource():
 func receive_resource(resource):
 	resource.reparent(self)
 	resource.position = Vector2.ZERO
+
+# Pick a resource out if the container that matches at least one group
+func select_pick_resource(groups = []):
+	var children = null
+
+	if groups == []:
+		children = get_children()
+	else:
+		children = _main_scene.get_children_in_groups(self, groups)
+
+	return children[0]

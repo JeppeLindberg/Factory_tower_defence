@@ -15,8 +15,8 @@ var _target_node
 var _health_bar
 var _health_scalar
 
+var health = 3
 var _max_health = 3
-var _health = 3
 var _spawn_time
 
 func activate():
@@ -63,12 +63,12 @@ func _process(_delta):
 
 # Take damage from a tower's bullet
 func take_damage(damage):
-	_health -= damage
+	health -= damage
 
-	_health_bar.visible = _health != _max_health
-	_health_scalar.scale = Vector2(_health/_max_health, 1)
+	_health_bar.visible = health != _enemy_specific.max_health
+	_health_scalar.scale = Vector2(health / _enemy_specific.max_health, 1)
 
-	if _health <= 0:
+	if health <= 0:
 		die()
 
 func die():

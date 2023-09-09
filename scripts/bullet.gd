@@ -4,7 +4,7 @@ var _groups := preload("res://scripts/library/groups.gd").new()
 var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
 
 @export var speed: float
-@export var damage: float
+var _damage
 
 var _collider
 var _debug
@@ -15,7 +15,7 @@ var _direction
 var _move_range
 
 
-func initialize(initial_pos, direction, charge_time, move_range):
+func initialize(initial_pos, direction, charge_time, move_range, damage):
 	_collider = get_node("collider")
 	_debug = get_node(_scene_paths.DEBUG)
 	global_position = initial_pos
@@ -24,6 +24,7 @@ func initialize(initial_pos, direction, charge_time, move_range):
 	_direction = _direction / _direction.length()
 	_initial_pos = initial_pos
 	_move_range = move_range
+	_damage = damage
 
 	_progress_time(charge_time)
 
@@ -61,6 +62,6 @@ func _physics_process(_delta):
 # Collide with an enemy, and handle all the following results
 func collide_with_enemy(enemy_node):
 	var enemy_generic = enemy_node.get_node("enemy_generic")
-	enemy_generic.take_damage(damage)
+	enemy_generic.take_damage(_damage)
 	queue_free()
 

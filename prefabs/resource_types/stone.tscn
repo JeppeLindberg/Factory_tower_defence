@@ -9,6 +9,7 @@ script = ExtResource("1_ttyrp")
 
 [node name="resource_specific" type="Node2D" parent="."]
 script = ExtResource("2_63ewh")
+kinetic_power = 1.0
 
 [node name="sprite" type="Sprite2D" parent="."]
 modulate = Color(0.309804, 0.643137, 0.247059, 1)

@@ -23,3 +23,7 @@ func initialize(global_pos, rotation_angle):
 func get_building_rotation():
 	return _sprite.rotation_degrees
 
+# Remove this building from the terrain
+func destroy():
+	generic_building.destroy()
+

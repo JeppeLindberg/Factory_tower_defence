@@ -16,7 +16,6 @@ var _health_bar
 var _health_scalar
 
 var health = 3
-var _max_health = 3
 var _spawn_time
 
 func activate():

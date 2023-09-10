@@ -68,9 +68,6 @@ button_path = "res://prefabs/ui/building_button.tscn"
 [node name="world_timer" type="Node2D" parent="."]
 script = ExtResource("2_k3tlx")
 
-[node name="building_placement" type="Node2D" parent="."]
-script = ExtResource("5_vuthm")
-
 [node name="tower_defence" type="Node2D" parent="."]
 script = ExtResource("3_s4em8")
 enemy_path = "res://prefabs/enemies/basic_enemy.tscn"
@@ -100,6 +97,14 @@ container_path = "res://prefabs/path/container.tscn"
 conveyor_path = "res://prefabs/path/conveyor.tscn"
 path_placer_path = "res://prefabs/path/path_placer.tscn"
 container_placer_path = "res://prefabs/path/container_placer.tscn"
+
+[node name="building_placement" type="Node2D" parent="."]
+script = ExtResource("5_vuthm")
+
+[node name="building_ghost" type="Node2D" parent="building_placement"]
+
+[node name="sprite" type="Sprite2D" parent="building_placement/building_ghost"]
+modulate = Color(1, 1, 1, 0.443137)
 
 [node name="controller" type="Node2D" parent="."]
 script = ExtResource("1_v354r")

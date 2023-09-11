@@ -41,9 +41,4 @@ func facing():
 	var vec = Vector2.UP.rotated(deg_to_rad(_root_node.get_building_rotation()))
 	return Vector2i(vec)
 
-# Remove the connections in path
-func destroy():
-	var path_connections = _get_path_connections()
-	# TODO: Remove from paths
-
 

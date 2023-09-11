@@ -15,7 +15,7 @@ var _target_node
 var _health_bar
 var _health_scalar
 
-var health = 3
+var health = 3.0
 var _spawn_time
 
 func activate():
@@ -71,5 +71,7 @@ func take_damage(damage):
 		die()
 
 func die():
-	_root_node.queue_free()
+	if not _root_node.is_queued_for_deletion():
+		_tower_defence.enemy_died()
+		_root_node.queue_free()
 

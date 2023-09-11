@@ -1,2 +1,5 @@
-const WAITING_FOR_NEXT_WAVE: String = "waiting_for_next_wave"
-const ONGOING_WAVE: String = "ongoing_wave"
+const PLANNING: String = "planning"
+const WAITING_FOR_ENEMY_SPAWN: String = "waiting_for_enemy_spawn"
+const ENEMIES_SPAWNING: String = "enemies_spawning"
+const WAITING_FOR_ENEMY_DEATH: String = "waiting_for_enemy_death"
+

@@ -21,6 +21,18 @@ func _process(delta):
 	if _state == _timer_states.PLAYING:
 		_seconds += delta
 
+# Start execution of game
+func play():
+	if _state == _timer_states.PAUSED:
+		_state = _timer_states.PLAYING
+		time_mult = 1.0
+
+# Pause the execution of the game
+func pause():
+	if _state == _timer_states.PLAYING:
+		_state = _timer_states.PAUSED
+		time_mult = 0.0
+
 # Pause/unpause the world
 func toggle_pause():
 	if _state == _timer_states.PLAYING:

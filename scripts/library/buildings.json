@@ -4,23 +4,27 @@
         "sprite_path": "res://sprites/buildings/tower_base.png",
         "cost": 20,
         "footprint_x": 2,
-        "footprint_y": 2,
-        "sprite_transform": "32,32,0.5,0.5"
+        "footprint_y": 2
     },
     "stone_drill": {
         "prefab_path": "res://prefabs/buildings/gathering/stone_drill.tscn",
         "sprite_path": "res://sprites/buildings/stone_drill.png",
         "cost": 0,
         "footprint_x": 2,
-        "footprint_y": 2,
-        "sprite_transform": "32,32,0.5,0.5"
+        "footprint_y": 2
     },
     "conveyor_belt": {
         "prefab_path": "res://prefabs/buildings/transport/conveyor_belt.tscn",
         "sprite_path": "res://sprites/buildings/conveyor_belt.png",
         "cost": 0,
         "footprint_x": 1,
-        "footprint_y": 1,
-        "sprite_transform": "32,32,0.5,0.5"
+        "footprint_y": 1
+    },
+    "splitter": {
+        "prefab_path": "res://prefabs/buildings/transport/splitter.tscn",
+        "sprite_path": "res://sprites/buildings/splitter.png",
+        "cost": 0,
+        "footprint_x": 2,
+        "footprint_y": 1
     }
 }

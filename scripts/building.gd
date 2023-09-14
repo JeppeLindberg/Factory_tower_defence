@@ -16,6 +16,7 @@ func _ready():
 
 func initialize(global_pos, rotation_angle):
 	global_position = global_pos
+	_sprite.transform = _main_scene.get_transform_from_footprint(footprint.x, footprint.y)
 	_sprite.rotation_degrees = rotation_angle
 	_main_scene.activate_node(self)
 

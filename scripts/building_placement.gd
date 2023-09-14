@@ -36,40 +36,25 @@ func set_current_building(building_name):
 # Show the ghost at the given coordinate, with the current placement rotation
 func show_building_ghost_at(coord):
 	var sprite = _building_ghost.get_node("sprite")
+	var footprint = _main_scene.get_footprint(current_building, rotation_angle)
 
 	_building_ghost.global_position = _main_scene.coord_to_pos(coord)
 
 	_ghost_texture = load(current_building["sprite_path"])
 
 	sprite.texture = _ghost_texture
-	sprite.transform = _get_transform_from_footprint(current_building["footprint_x"], current_building["footprint_y"])
+	sprite.transform = _main_scene.get_transform_from_footprint(footprint.x, footprint.y)
 	sprite.rotation_degrees = rotation_angle
-
-# Get the sprite transform for a building with the given footprint
-func _get_transform_from_footprint(footprint_x, footprint_y):
-	var pos_x = 0
-	var pos_y = 0
-	var scale_x = 0.5
-	var scale_y = 0.5
-
-	if footprint_x == 1:
-		pos_x = 16.0
-	elif footprint_x == 2:
-		pos_x = 32.0
-
-	if footprint_y == 1:
-		pos_y = 16.0
-	elif footprint_y == 2:
-		pos_y = 32.0
-
-	return Transform2D(0, Vector2(scale_x, scale_y), 0, Vector2(pos_x, pos_y))	
 
 # Place the current building at this coordinate
 func place_current_building_at_coord(coord):
 	var cell_coords = []
-	for x in range(current_building["footprint_x"]):
-		for y in range(current_building["footprint_y"]):
+	var footprint = _main_scene.get_footprint(current_building, rotation_angle)
+
+	for x in footprint.x:
+		for y in footprint.y:
 			cell_coords.append(Vector2i(coord.x + x, coord.y + y))
+	
 	var cell_infos = []
 	for cell_coord in cell_coords:
 		cell_infos.append(_terrain.get_cell(cell_coord)["state"])

@@ -8,10 +8,8 @@ var _world_timer
 var _tower_defence
 var _debug
 
-var _footprint_x
-var _footprint_y
 var _event_pos
-var _tile_pos
+var _tile_coord
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,22 +22,20 @@ func _ready():
 # Called on any input that has not already been handled by the UI or other sources
 func _unhandled_input(event):
 	if event is InputEventMouse:
-		var event_coord = _main_scene.pos_to_coord(event.position)
-		_debug.add_debug_text("cursor position", str(event_coord))
+		var footprint = _main_scene.get_footprint(_building_placement.current_building, _building_placement.rotation_angle)
 
-	if event is InputEventMouse:
-		_footprint_x = _building_placement.current_building["footprint_x"]
-		_footprint_y = _building_placement.current_building["footprint_y"]
 		_event_pos = event.position
-		_event_pos -= Vector2((_footprint_x - 1) * (_main_scene.quadrant_size().x / 2),
-								(_footprint_y - 1) * (_main_scene.quadrant_size().y / 2))
+		_event_pos -= Vector2((footprint.x - 1) * (_main_scene.quadrant_size().x / 2),
+								(footprint.y - 1) * (_main_scene.quadrant_size().y / 2))
 
-		_tile_pos = _main_scene.pos_to_coord(_event_pos)
+		_tile_coord = _main_scene.pos_to_coord(_event_pos)
 
-		_building_placement.show_building_ghost_at(_tile_pos)
+		_debug.add_debug_text("cursor position", str(_tile_coord))
+
+		_building_placement.show_building_ghost_at(_tile_coord)
 		
 		if event is InputEventMouseButton and event.pressed:
-			_building_placement.place_current_building_at_coord(_tile_pos)
+			_building_placement.place_current_building_at_coord(_tile_coord)
 	
 	if event.is_action_pressed("start_round"):
 		_tower_defence.start_round()
@@ -47,7 +43,7 @@ func _unhandled_input(event):
 	if event.is_action_pressed("rotate"):
 		_building_placement.rotate_placement()
 
-		_building_placement.show_building_ghost_at(_tile_pos)
+		_building_placement.show_building_ghost_at(_tile_coord)
 	
 	if event.is_action_pressed("skip_to_next_wave"):
 		_tower_defence.skip_to_next_wave()

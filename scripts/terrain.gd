@@ -32,11 +32,13 @@ func find_index_of_cell(coord):
 # Spawn a building at the given coordinate. the location has already been confirmed for being buildable
 func spawn_building(building_name, building_info, coord, rotation_angle):
 	var new_building = _main_scene.create_node(building_info["prefab_path"], _buildings)
-	new_building.building_name = building_name
-	new_building.footprint = Vector2i(building_info["footprint_x"], building_info["footprint_y"])	
+	var footprint = _main_scene.get_footprint(building_info, rotation_angle)
 
-	for x in building_info["footprint_x"]:
-		for y in building_info["footprint_y"]:
+	new_building.building_name = building_name
+	new_building.footprint = footprint
+
+	for x in footprint.x:
+		for y in footprint.y:
 			var index = find_index_of_cell(Vector2i(coord.x + x, coord.y + y))
 			_cells[index]["building"] = new_building
 			_cells[index]["state"] = [_cell_states.OCCUPIED]

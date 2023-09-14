@@ -70,6 +70,37 @@ func get_children_in_groups(node, groups):
 		for group in groups:				
 			if child.is_in_group(group):
 				result.append(child)
-				break				
+				break
 
 	return result
+
+# Get the footprint of a building, and account for the rotation of the building
+func get_footprint(building_info, rotation_angle):
+	var footprint_x = building_info["footprint_x"]
+	var footprint_y = building_info["footprint_y"]
+
+	if rotation_angle % 180 != 0:
+		var temp = footprint_x
+		footprint_x = footprint_y
+		footprint_y = temp
+	
+	return Vector2i(footprint_x, footprint_y)
+
+# Get the sprite transform for a building with the given footprint
+func get_transform_from_footprint(footprint_x, footprint_y):
+	var pos_x = 0
+	var pos_y = 0
+	var scale_x = 0.5
+	var scale_y = 0.5
+
+	if footprint_x == 1:
+		pos_x = 16.0
+	elif footprint_x == 2:
+		pos_x = 32.0
+
+	if footprint_y == 1:
+		pos_y = 16.0
+	elif footprint_y == 2:
+		pos_y = 32.0
+
+	return Transform2D(0, Vector2(scale_x, scale_y), 0, Vector2(pos_x, pos_y))	

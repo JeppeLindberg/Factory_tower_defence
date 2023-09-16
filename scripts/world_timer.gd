@@ -60,6 +60,7 @@ func toggle_pause():
 
 # Stop the timer. It cannot be un-stopped
 func stop():
+	time_mult = 0.0
 	_state = _timer_states.STOPPED
 
 # Return the amount of seconds (floating point) that has elapsed in the world timer

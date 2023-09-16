@@ -112,10 +112,14 @@ func get_transform_from_footprint(footprint_x, footprint_y):
 		pos_x = 16.0
 	elif footprint_x == 2:
 		pos_x = 32.0
+	elif footprint_x == 3:
+		pos_x = 48.0
 
 	if footprint_y == 1:
 		pos_y = 16.0
 	elif footprint_y == 2:
 		pos_y = 32.0
+	elif footprint_y == 3:
+		pos_y = 48.0
 
 	return Transform2D(0, Vector2(scale_x, scale_y), 0, Vector2(pos_x, pos_y))	

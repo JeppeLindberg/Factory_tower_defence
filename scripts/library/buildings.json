@@ -1,28 +1,40 @@
 {
     "slag_shooter": {
         "prefab_path": "res://prefabs/buildings/towers/slag_shooter.tscn",
-        "sprite_path": "res://sprites/buildings/tower_base.png",
+        "ui_sprite_path": "res://sprites/buildings/tower_base.png",
+        "placement_ghost_sprite_path": "res://sprites/buildings/tower_base.png",
         "cost": 20,
         "footprint_x": 2,
         "footprint_y": 2
     },
+    "autoshooter": {
+        "prefab_path": "res://prefabs/buildings/towers/autoshooter.tscn",
+        "ui_sprite_path": "res://sprites/buildings/autoshooter.png",
+        "placement_ghost_sprite_path": "res://sprites/buildings/tower_base_3x3.png",
+        "cost": 30,
+        "footprint_x": 3,
+        "footprint_y": 3
+    },
     "stone_drill": {
         "prefab_path": "res://prefabs/buildings/gathering/stone_drill.tscn",
-        "sprite_path": "res://sprites/buildings/stone_drill.png",
+        "ui_sprite_path": "res://sprites/buildings/stone_drill.png",
+        "placement_ghost_sprite_path": "res://sprites/buildings/stone_drill.png",
         "cost": 0,
         "footprint_x": 2,
         "footprint_y": 2
     },
     "conveyor_belt": {
         "prefab_path": "res://prefabs/buildings/transport/conveyor_belt.tscn",
-        "sprite_path": "res://sprites/buildings/conveyor_belt.png",
+        "ui_sprite_path": "res://sprites/buildings/conveyor_belt.png",
+        "placement_ghost_sprite_path": "res://sprites/buildings/conveyor_belt.png",
         "cost": 0,
         "footprint_x": 1,
         "footprint_y": 1
     },
     "splitter": {
         "prefab_path": "res://prefabs/buildings/transport/splitter.tscn",
-        "sprite_path": "res://sprites/buildings/splitter.png",
+        "ui_sprite_path": "res://sprites/buildings/splitter.png",
+        "placement_ghost_sprite_path": "res://sprites/buildings/splitter.png",
         "cost": 0,
         "footprint_x": 2,
         "footprint_y": 1

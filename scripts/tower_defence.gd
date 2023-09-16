@@ -80,7 +80,7 @@ func start_enemy_spawn():
 	var enemy_dicts = enemy_wave_dict['enemies']
 
 	for enemy_dict in enemy_dicts:
-		for x in range(enemy_dict['quanity']):
+		for x in range(enemy_dict['quantity']):
 			_remaining_enemy_spawns.append(_enemy_paths.get_path_by_name(enemy_dict['type']))
 	
 	_remaining_enemy_spawns.shuffle()

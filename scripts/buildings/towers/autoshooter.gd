@@ -4,7 +4,7 @@ var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
 var _power_types := preload("res://scripts/library/power_types.gd").new()
 
 @export var footprint: Vector2i
-@export var shots_per_second: float
+@export var shots_per_second = 1.0
 @export var targeting_range: float # number of squares
 
 @export var bullet_path: String

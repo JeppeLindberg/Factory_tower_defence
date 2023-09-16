@@ -17,7 +17,7 @@ func activate():
 	for building_name in buildings_dict.keys():
 		var new_button = _main_scene.create_node(button_path, self)
 		new_button.building_name = building_name
-		var sprite = load(buildings_dict[building_name]["sprite_path"])
+		var sprite = load(buildings_dict[building_name]["ui_sprite_path"])
 		var texture = new_button.get_node("texture")
 		texture.texture = sprite
 

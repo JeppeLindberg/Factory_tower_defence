@@ -45,7 +45,7 @@ func show_building_ghost_at(coord):
 
 	_building_ghost.global_position = _main_scene.coord_to_pos(coord)
 
-	_ghost_texture = load(current_building["sprite_path"])
+	_ghost_texture = load(current_building["placement_ghost_sprite_path"])
 
 	sprite.texture = _ghost_texture
 	sprite.transform = _main_scene.get_transform_from_footprint(footprint.x, footprint.y)

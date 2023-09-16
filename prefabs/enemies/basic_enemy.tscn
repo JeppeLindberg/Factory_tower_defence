@@ -18,7 +18,7 @@ script = ExtResource("1_qwvou")
 [node name="basic_enemy" type="Node2D" parent="enemy_generic"]
 script = ExtResource("3_he42f")
 speed = 1.0
-max_health = 0.3
+max_health = 3.0
 
 [node name="health_bar" type="Node2D" parent="."]
 visible = false

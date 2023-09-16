@@ -3,8 +3,10 @@ extends Node2D
 var _buildings := preload("res://scripts/library/buildings.gd").new()
 var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
 var _cell_states := preload("res://scripts/library/cell_states.gd").new()
+var _tower_defence_states := preload("res://scripts/library/tower_defence_states.gd").new()
 
 var _main_scene
+var _tower_defence
 var _terrain
 var _debug
 var _building_ghost
@@ -19,6 +21,7 @@ var _ghost_texture
 
 func activate():
 	_main_scene = get_node(_scene_paths.MAIN_SCENE)
+	_tower_defence = get_node(_scene_paths.TOWER_DEFENCE)
 	_terrain = get_node(_scene_paths.TERRAIN)
 	_debug = get_node(_scene_paths.DEBUG)
 	_building_ghost = get_node("building_ghost")
@@ -35,6 +38,8 @@ func set_current_building(building_name):
 
 # Show the ghost at the given coordinate, with the current placement rotation
 func show_building_ghost_at(coord):
+	_building_ghost.visible = true
+
 	var sprite = _building_ghost.get_node("sprite")
 	var footprint = _main_scene.get_footprint(current_building, rotation_angle)
 
@@ -45,6 +50,10 @@ func show_building_ghost_at(coord):
 	sprite.texture = _ghost_texture
 	sprite.transform = _main_scene.get_transform_from_footprint(footprint.x, footprint.y)
 	sprite.rotation_degrees = rotation_angle
+
+# Hide the building ghost
+func hide_building_ghost():
+	_building_ghost.visible = false
 
 # Place the current building at this coordinate
 func place_current_building_at_coord(coord):
@@ -68,6 +77,11 @@ func place_current_building_at_coord(coord):
 	
 	_terrain.spawn_building(current_building_name, current_building, coord, rotation_angle)
 	resources -= current_building["cost"]
+
+func check_can_build():
+	if _tower_defence.get_state() == _tower_defence_states.PLANNING:
+		return true
+	return false
 
 func rotate_placement():
 	rotation_angle += 90

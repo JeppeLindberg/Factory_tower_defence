@@ -1,0 +1,37 @@
+{
+    "1": { 
+    "enemies": [
+        {"type": "basic_enemy", "quanity": 10}
+    ]
+    },
+    "2": { 
+    "enemies": [
+        {"type": "basic_enemy", "quanity": 20}
+    ]
+    },
+    "3": { 
+    "enemies": [
+        {"type": "basic_enemy", "quanity": 30}
+    ]
+    },
+    "4": { 
+    "enemies": [
+        {"type": "basic_enemy", "quanity": 40}
+    ]
+    },
+    "5": { 
+    "enemies": [
+        {"type": "basic_enemy", "quanity": 60}
+    ]
+    },
+    "6": { 
+    "enemies": [
+        {"type": "basic_enemy", "quanity": 80}
+    ]
+    },
+    "7": { 
+    "enemies": [
+        {"type": "basic_enemy", "quanity": 100}
+    ]
+    }
+}

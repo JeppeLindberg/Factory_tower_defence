@@ -3,6 +3,8 @@ extends Node2D
 var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
 var _groups := preload("res://scripts/library/groups.gd").new()
 var _tower_defence_states := preload("res://scripts/library/tower_defence_states.gd").new()
+var _enemy_waves := preload("res://scripts/library/enemy_waves.gd").new()
+var _enemy_paths := preload("res://scripts/library/enemy_paths.gd").new()
 
 var _main_scene
 var _world_timer
@@ -14,9 +16,10 @@ var _paths
 @export var enemy_path: String
 
 var _state
+var _round = 1
 var _next_event_timer
 var _remaining_health = 10
-var _remaining_enemy_spawns
+var _remaining_enemy_spawns = []
 var _remaining_enemies = 0
 
 
@@ -33,9 +36,10 @@ func activate():
 	_world_timer.reset()
 
 func _process(_delta):
+	_debug.add_debug_text("round", _round)
 	_debug.add_debug_text("tower_defence state", _state)
 	_debug.add_debug_text("health", _remaining_health)
-	_debug.add_debug_text("remaining_enemies", _remaining_enemies)
+	# _debug.add_debug_text("remaining_enemies", _remaining_enemies)
 
 	if _state == _tower_defence_states.PLANNING:
 		return
@@ -47,12 +51,12 @@ func _process(_delta):
 	
 	while _world_timer.seconds() > _next_event_timer:
 		if _state == _tower_defence_states.WAITING_FOR_ENEMY_SPAWN:
-			_remaining_enemy_spawns = 10
-			_change_state(_tower_defence_states.ENEMIES_SPAWNING)
+			start_enemy_spawn()
 
 		if _state == _tower_defence_states.ENEMIES_SPAWNING:
 			spawn_enemy()
-			if _remaining_enemy_spawns <= 0:
+
+			if _remaining_enemy_spawns.is_empty():
 				_change_state(_tower_defence_states.WAITING_FOR_ENEMY_DEATH)
 				break;
 			else:
@@ -68,6 +72,21 @@ func start_round():
 
 		_change_state(_tower_defence_states.WAITING_FOR_ENEMY_SPAWN)
 
+# Prepare for spawning enemies
+func start_enemy_spawn():
+	_remaining_enemy_spawns = []
+
+	var enemy_wave_dict = _enemy_waves.get_wave_by_index(_round)
+	var enemy_dicts = enemy_wave_dict['enemies']
+
+	for enemy_dict in enemy_dicts:
+		for x in range(enemy_dict['quanity']):
+			_remaining_enemy_spawns.append(_enemy_paths.get_path_by_name(enemy_dict['type']))
+	
+	_remaining_enemy_spawns.shuffle()
+
+	_change_state(_tower_defence_states.ENEMIES_SPAWNING)
+
 # End this round
 func end_round():
 	if _state == _tower_defence_states.WAITING_FOR_ENEMY_DEATH:
@@ -79,17 +98,20 @@ func end_round():
 		_world_timer.pause()
 		_world_timer.reset()
 
+		_round += 1
 		_change_state(_tower_defence_states.PLANNING)
 
 # Change the state of the tower defence part of the game
 func _change_state(new_state):
 	_state = new_state
 
+func get_state():
+	return _state
+
 # Spawn an enemy. Each enemy spawn behavour is handled by the enemy itself.
-func spawn_enemy():	
-	_main_scene.create_node(enemy_path, _enemies)
+func spawn_enemy():
+	_main_scene.create_node(_remaining_enemy_spawns.pop_front(), _enemies)
 	_remaining_enemies += 1
-	_remaining_enemy_spawns -= 1
 
 # Take damage from an enemy reaching the reactor
 func take_damage():

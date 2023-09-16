@@ -30,7 +30,11 @@ func _unhandled_input(event):
 
 		_tile_coord = _main_scene.pos_to_coord(_event_pos)
 
-		_debug.add_debug_text("placement position", str(_tile_coord))
+		# _debug.add_debug_text("placement position", str(_tile_coord))
+
+		if not _building_placement.check_can_build():
+			_building_placement.hide_building_ghost()
+			return
 
 		_building_placement.show_building_ghost_at(_tile_coord)
 		

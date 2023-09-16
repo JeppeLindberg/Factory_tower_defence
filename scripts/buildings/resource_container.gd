@@ -2,6 +2,8 @@ extends Node2D
 
 var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
 
+var resource_capacity = -1
+
 var _main_scene
 var _root_node
 var _terrain
@@ -9,6 +11,7 @@ var _paths
 
 var _pickers = []
 var _active_picker = 0
+
 
 func activate():
 	_main_scene = get_node(_scene_paths.MAIN_SCENE)
@@ -27,21 +30,22 @@ func _process(_delta):
 	if _pickers.is_empty():
 		return
 
-	var r = range(len(_pickers))
-	for i in range(len(r)):
-		r[i] -= _active_picker
-		r[i] = r[i] % len(_pickers)
+	var queue = _get_picker_queue()
 
-	for index in r:
+	for index in queue:
 		if get_children().is_empty():
 			return
 		
-		var deposit_pos = _pickers[index].curve.get_point_position(0)
+		var resource = select_pick_resource()
+		try_pick_resource(resource, index)
 
-		if _pickers[index].check_can_recieve_at_pos(deposit_pos):
-			_pickers[index].receive_resource(select_pick_resource(), deposit_pos)
-			_active_picker -= 1
-			_active_picker = _active_picker % len(_pickers)
+# Get the order of checking which picker should recieve a resource
+func _get_picker_queue():	
+	var queue = range(len(_pickers))
+	for i in range(len(queue)):
+		queue[i] -= _active_picker
+		queue[i] = queue[i] % len(_pickers)
+	return queue
 
 # Set the path that picks from this container
 func add_picker(picker):
@@ -49,12 +53,36 @@ func add_picker(picker):
 
 # Check wether the container can recieve a resource
 func can_recieve_resource():
+	if resource_capacity == 0:
+		for path in _pickers:
+			if path.check_can_recieve():
+				return true
+		
+		return false
+
 	return true
 
 # Put a given resource into the container
 func receive_resource(resource):
 	resource.reparent(self)
 	resource.position = Vector2.ZERO
+
+	if resource_capacity == 0:		
+		var queue = _get_picker_queue()
+
+		for index in queue:
+			if try_pick_resource(resource, index):
+				break
+
+# Attempt to move the given resource to a picker
+func try_pick_resource(resource, picker_index):
+	if _pickers[picker_index].check_can_recieve():
+		_pickers[picker_index].receive_resource(resource)
+		_active_picker -= 1
+		_active_picker = _active_picker % len(_pickers)
+		return true
+
+	return false
 
 # Pick a resource out if the container that matches at least one group
 func select_pick_resource(groups = []):

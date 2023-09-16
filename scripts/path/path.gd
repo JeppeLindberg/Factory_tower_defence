@@ -44,12 +44,22 @@ func _process(delta):
 			path_follow.queue_free()
 
 # Recieve a resource so that it can be moved along the path
-func receive_resource(resource, pos):
+func receive_resource(resource, pos = null):
+	if pos == null:
+		pos = curve.get_point_position(0)
+
 	var path_follow = _main_scene.create_node(path_follow_path, self)
 	path_follow.global_position = pos
 	resource.reparent(path_follow)
 	resource.global_position = pos
 	path_follow.progress = _pos_to_progress(pos)
+
+# Check if the path can recieve a resouce at the start position of the path
+func check_can_recieve():
+	var pos = curve.get_point_position(0)
+	var boo = check_can_recieve_at_pos(pos)
+	print(boo)
+	return boo
 
 # Check if the given position is occupied or otherwise unavailable
 func check_can_recieve_at_pos(pos):
@@ -60,7 +70,7 @@ func check_can_recieve_at_pos(pos):
 		if abs(path_follow.progress - progress) < closest_progress:
 			closest_progress = abs(path_follow.progress - progress)
 
-	if closest_progress < _resource_node_radius:
+	if closest_progress < _resource_node_radius * 2:
 		return false
 
 	return true

@@ -7,8 +7,7 @@ var _main_scene
 var _terrain
 var _paths
 var _debug
-
-var path = null
+var _resource_container
 
 
 func activate():
@@ -17,13 +16,11 @@ func activate():
 	_terrain = get_node(_scene_paths.TERRAIN)
 	_paths = _terrain.get_node("paths")
 	_debug = get_node(_scene_paths.DEBUG)
-	
-	pass
+	_resource_container = _root_node.get_node("resource_container")
 
-func _get_path_connections():
-	pass
+	_resource_container.resource_capacity = 0
 
-# Get the facing of the conveyor belt as a vector
+# Get the facing of the splitter as a vector
 func facing():
 	var vec = Vector2.UP.rotated(deg_to_rad(_root_node.get_building_rotation()))
 	return Vector2i(vec)

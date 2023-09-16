@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cumu6oj7jq2r8"]
+[gd_scene load_steps=5 format=3 uid="uid://cumu6oj7jq2r8"]
 
 [ext_resource type="Script" path="res://scripts/building.gd" id="1_14g8e"]
 [ext_resource type="Script" path="res://scripts/buildings/transport/splitter.gd" id="2_ty6mm"]
 [ext_resource type="Texture2D" uid="uid://byibxt1eryr0i" path="res://sprites/buildings/splitter.png" id="3_4qat7"]
+[ext_resource type="Script" path="res://scripts/buildings/resource_container.gd" id="4_0vj47"]
 
 [node name="splitter" type="Node2D"]
 script = ExtResource("1_14g8e")
@@ -14,3 +15,6 @@ script = ExtResource("2_ty6mm")
 position = Vector2(32, 16)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_4qat7")
+
+[node name="resource_container" type="Node2D" parent="."]
+script = ExtResource("4_0vj47")

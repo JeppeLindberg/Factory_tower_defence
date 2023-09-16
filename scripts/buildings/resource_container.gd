@@ -1,6 +1,7 @@
 extends Node2D
 
 var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
+var _groups := preload("res://scripts/library/groups.gd").new()
 
 var resource_capacity = -1
 
@@ -19,13 +20,6 @@ func activate():
 	_terrain = get_node(_scene_paths.TERRAIN)
 	_paths = _terrain.get_node("paths")
 
-	for x in range(_root_node.footprint.x):
-		for y in range(_root_node.footprint.y):
-			var offset = Vector2i(x, y)
-			_paths.create_container(_main_scene.pos_to_coord(_root_node.global_position) + offset, self)
-	
-	_paths.autoconnect_all()
-
 func _process(_delta):
 	if _pickers.is_empty():
 		return
@@ -33,7 +27,7 @@ func _process(_delta):
 	var queue = _get_picker_queue()
 
 	for index in queue:
-		if get_children().is_empty():
+		if _main_scene.get_children_in_groups(self, [_groups.RESOURCE]).is_empty():
 			return
 		
 		var resource = select_pick_resource()
@@ -67,7 +61,7 @@ func receive_resource(resource):
 	resource.reparent(self)
 	resource.position = Vector2.ZERO
 
-	if resource_capacity == 0:		
+	if resource_capacity == 0:
 		var queue = _get_picker_queue()
 
 		for index in queue:
@@ -86,11 +80,17 @@ func try_pick_resource(resource, picker_index):
 
 # Pick a resource out if the container that matches at least one group
 func select_pick_resource(groups = []):
-	var children = null
-
-	if groups == []:
-		children = get_children()
-	else:
-		children = _main_scene.get_children_in_groups(self, groups)
-
+	groups.append(_groups.RESOURCE)
+	var children = _main_scene.get_children_in_groups(self, groups)
 	return children[0]
+
+# Called from path_trigger child
+func create_transport_nodes():
+	for x in range(_root_node.footprint.x):
+		for y in range(_root_node.footprint.y):
+			var offset = Vector2i(x, y)
+			_paths.create_container(_main_scene.pos_to_coord(_root_node.global_position) + offset, self)
+
+# Called from path_trigger child
+func transport_nodes_deleted():
+	_pickers = []

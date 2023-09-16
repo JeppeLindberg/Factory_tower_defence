@@ -18,6 +18,7 @@ func activate():
 
 func _process(delta):
 	_debug.add_debug_text("world_timer state", _state)
+	_debug.add_debug_text("world_timer seconds", _seconds)
 	if _state == _timer_states.PLAYING:
 		_seconds += delta
 
@@ -32,6 +33,20 @@ func pause():
 	if _state == _timer_states.PLAYING:
 		_state = _timer_states.PAUSED
 		time_mult = 0.0
+
+# Reset the clock
+func reset():
+	_seconds = 0
+
+	propogate_reset(_main_scene)
+
+# Run the reset for all nodes that need to know when the world timer resets.
+func propogate_reset(node):	
+	if node.has_method("world_timer_reset"):
+		node.world_timer_reset()
+
+	for child in node.get_children():
+		propogate_reset(child)
 
 # Pause/unpause the world
 func toggle_pause():

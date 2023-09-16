@@ -57,9 +57,7 @@ func receive_resource(resource, pos = null):
 # Check if the path can recieve a resouce at the start position of the path
 func check_can_recieve():
 	var pos = curve.get_point_position(0)
-	var boo = check_can_recieve_at_pos(pos)
-	print(boo)
-	return boo
+	return check_can_recieve_at_pos(pos)
 
 # Check if the given position is occupied or otherwise unavailable
 func check_can_recieve_at_pos(pos):

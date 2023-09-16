@@ -29,8 +29,9 @@ func activate():
 	resource_container = generic_building.get_node("resource_container")
 	_range_area2d = generic_building.get_node("range")
 
-	_next_shot_time = _world_timer.seconds() + 1.0 / _tower_specific.shots_per_second
 	_range_area2d.get_node("collision").shape.radius = _tower_specific.get_range_as_pixels()
+
+	world_timer_reset()
 
 func _process(_delta):
 	find_target()
@@ -72,7 +73,7 @@ func can_shoot():
 	if _target == null:
 		return false
 
-	if len(resource_container.get_children()) == 0:
+	if _main_scene.get_children_in_groups(resource_container, [_groups.RESOURCE]).is_empty():
 		return false
 
 	return true
@@ -81,5 +82,8 @@ func can_shoot():
 # The specific tower implementation handles the specifics of the shooting
 func shoot(charge_time):
 	_tower_specific.shoot(_target, charge_time)
-	
+
+# Called from world timer whenever it is reset. Add this function to all nodes that use next_event_time implementations
+func world_timer_reset():
+	_next_shot_time = _world_timer.seconds() + 1.0 / _tower_specific.shots_per_second
 

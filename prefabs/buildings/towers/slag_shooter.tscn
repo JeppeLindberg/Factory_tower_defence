@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dvhabtk8hf3fi"]
+[gd_scene load_steps=8 format=3 uid="uid://dvhabtk8hf3fi"]
 
 [ext_resource type="Script" path="res://scripts/building.gd" id="1_xr7jb"]
 [ext_resource type="Script" path="res://scripts/buildings/generic_tower.gd" id="2_b65io"]
 [ext_resource type="Script" path="res://scripts/buildings/towers/slag_shooter.gd" id="3_7a827"]
 [ext_resource type="Texture2D" uid="uid://dhjv6udmuj53l" path="res://sprites/buildings/tower_base.png" id="4_djh7p"]
 [ext_resource type="Script" path="res://scripts/buildings/resource_container.gd" id="5_irn2g"]
+[ext_resource type="Script" path="res://prefabs/buildings/path_trigger.gd" id="6_sixr2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_60yd6"]
 radius = 225.009
@@ -43,3 +44,6 @@ shape = SubResource("CircleShape2D_60yd6")
 
 [node name="resource_container" type="Node2D" parent="."]
 script = ExtResource("5_irn2g")
+
+[node name="path_trigger" type="Node2D" parent="resource_container"]
+script = ExtResource("6_sixr2")

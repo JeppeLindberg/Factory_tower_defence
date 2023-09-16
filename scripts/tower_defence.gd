@@ -1,6 +1,7 @@
 extends Node2D
 
 var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
+var _groups := preload("res://scripts/library/groups.gd").new()
 var _tower_defence_states := preload("res://scripts/library/tower_defence_states.gd").new()
 
 var _main_scene
@@ -8,6 +9,7 @@ var _world_timer
 var _debug
 var _terrain
 var _enemies
+var _paths
 
 @export var enemy_path: String
 
@@ -23,10 +25,12 @@ func activate():
 	_world_timer = get_node(_scene_paths.WORLD_TIMER)
 	_debug = get_node(_scene_paths.DEBUG)
 	_terrain = get_node(_scene_paths.TERRAIN)
+	_paths = _terrain.get_node("paths")
 	_enemies = _terrain.get_node("enemies")
 
 	_state = _tower_defence_states.PLANNING
 	_world_timer.pause()
+	_world_timer.reset()
 
 func _process(_delta):
 	_debug.add_debug_text("tower_defence state", _state)
@@ -57,14 +61,24 @@ func _process(_delta):
 # Start the next round
 func start_round():
 	if _state == _tower_defence_states.PLANNING:
+		_paths.connect_all_paths()
+		
 		_world_timer.play()
 		_next_event_timer = _world_timer.seconds() + 10
+
 		_change_state(_tower_defence_states.WAITING_FOR_ENEMY_SPAWN)
 
 # End this round
 func end_round():
 	if _state == _tower_defence_states.WAITING_FOR_ENEMY_DEATH:
+		_paths.disconnect_all_paths()
+
+		for resource in _main_scene.get_children_in_groups(_terrain, [_groups.RESOURCE], true):
+			resource.queue_free()
+
 		_world_timer.pause()
+		_world_timer.reset()
+
 		_change_state(_tower_defence_states.PLANNING)
 
 # Change the state of the tower defence part of the game

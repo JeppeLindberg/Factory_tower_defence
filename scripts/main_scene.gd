@@ -17,7 +17,7 @@ func _ready():
 
 	_allow_activate_node = true
 
-	activate_node(self)
+	activate_node(self)	
 
 # Distributes a message to a node and its children recursively, that activates that node after all nodes have been instantiated
 func activate_node(node):
@@ -62,17 +62,32 @@ func get_random_element(options):
 	var index = randi() % options.size()
 	return options[index]
 
+var _result = []
+
 # Get all children of the node that belongs to one or more of the the given groups
-func get_children_in_groups(node, groups):
-	var result = []
+func get_children_in_groups(node, groups, recursive = false):
+	_result = []
+
+	if recursive:
+		_get_children_in_groups_recursive(node, groups)
+		return _result
 
 	for child in node.get_children():
 		for group in groups:				
 			if child.is_in_group(group):
-				result.append(child)
+				_result.append(child)
 				break
 
-	return result
+	return _result
+
+# Get all children of the node that belongs to one or more of the the given groups
+func _get_children_in_groups_recursive(node, groups):
+	for child in node.get_children():
+		for group in groups:				
+			if child.is_in_group(group):
+				_result.append(child)
+				break
+		_get_children_in_groups_recursive(child, groups)
 
 # Get the footprint of a building, and account for the rotation of the building
 func get_footprint(building_info, rotation_angle):

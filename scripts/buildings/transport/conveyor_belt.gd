@@ -18,15 +18,17 @@ func activate():
 	_paths = _terrain.get_node("paths")
 	_debug = get_node(_scene_paths.DEBUG)
 
+# Called from path_trigger child
+func create_transport_nodes():
 	var path_connections = _get_path_connections()
 
 	_paths.create_conveyor(path_connections[1], self)
 	_paths.connect_conveyors(path_connections[0], path_connections[1])
 	_paths.connect_conveyors(path_connections[1], path_connections[2])
 
-	_paths.autoconnect_all()
-
+# Get the coordinates of the connections that are relevant for this building
 func _get_path_connections():
+	# TODO: Move this to paths.gd
 	var up = Vector2.UP.rotated(deg_to_rad(_root_node.get_building_rotation()))
 	var down = Vector2.DOWN.rotated(deg_to_rad(_root_node.get_building_rotation()))
 

@@ -20,7 +20,7 @@ func activate():
 	_debug = get_node(_scene_paths.DEBUG)
 	resource_container = root_node.get_node("resource_container")
 
-	_next_event_time = _world_timer.seconds() + 1.0 / _gatherer_specific.gathers_per_second 
+	world_timer_reset()
 
 func _process(_delta):
 	if _world_timer.seconds() >= _next_event_time:
@@ -32,3 +32,6 @@ func _process(_delta):
 func gather(charge_time):
 	_gatherer_specific.gather(charge_time)
 
+# Called from world timer whenever it is reset. Add this function to all nodes that use next_event_time implementations
+func world_timer_reset():
+	_next_event_time = _world_timer.seconds() + 1.0 / _gatherer_specific.gathers_per_second

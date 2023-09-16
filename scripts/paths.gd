@@ -11,12 +11,14 @@ var _groups := preload("res://scripts/library/groups.gd").new()
 
 var _main_scene
 var _terrain
+var _buildings
 var _debug
 
 
 func activate():
 	_main_scene = get_node(_scene_paths.MAIN_SCENE)
 	_terrain = get_node(_scene_paths.TERRAIN)
+	_buildings = _terrain.get_node("buildings")
 	_debug = get_node(_scene_paths.DEBUG)
 
 # Debug reasons
@@ -36,6 +38,25 @@ func _process(_delta):
 	
 	for container in _main_scene.get_children_in_groups(self, [_groups.PLACER]):
 		_debug.add_draw_diamond(container.global_position, Color.ORANGE)
+
+# Connect all the paths. Do this at the beginning of each round.
+func connect_all_paths():
+	var path_triggers = _main_scene.get_children_in_groups(_buildings, [_groups.PATH_TRIGGER], true)
+
+	for path_trigger in path_triggers:
+		path_trigger.create_transport_nodes()
+	
+	_autoconnect_all()
+
+# Disconnect all paths. Do this at the end of each round.
+func disconnect_all_paths():
+	for child in get_children():
+		child.queue_free()
+
+	var path_triggers = _main_scene.get_children_in_groups(_buildings, [_groups.PATH_TRIGGER], true)
+
+	for path_trigger in path_triggers:
+		path_trigger.transport_nodes_deleted()
 
 # Create a node that describes a spot where resources can be deposited or retrieved
 func create_container(coord, container):
@@ -67,7 +88,7 @@ func connect_conveyors(from_coord, to_coord):
 	_merge_all_paths()
 
 # Connect all pickers and placers
-func autoconnect_all():
+func _autoconnect_all():
 	_connect_all_pickers()
 	_connect_all_placers()
 

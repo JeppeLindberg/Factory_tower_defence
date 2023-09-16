@@ -18,7 +18,7 @@ func activate():
 
 func _process(delta):
 	_debug.add_debug_text("world_timer state", _state)
-	_debug.add_debug_text("world_timer seconds", _seconds)
+	_debug.add_debug_text("world_timer seconds", snapped(_seconds, 0.1))
 	if _state == _timer_states.PLAYING:
 		_seconds += delta
 

@@ -15,7 +15,7 @@ var _range_area2d
 var _debug
 
 var _next_shot_time
-var _target
+var target
 
 
 func activate():
@@ -41,7 +41,7 @@ func _process(_delta):
 		_next_shot_time = _world_timer.seconds()
 
 	elif can_shoot():
-		_debug.add_draw_line(bullet_emitter.global_position, _target.global_position, Color.DARK_RED)
+		_debug.add_draw_line(bullet_emitter.global_position, target.global_position, Color.DARK_RED)
 		
 		if _world_timer.seconds() >= _next_shot_time:
 			var charge_time = _world_timer.seconds() - _next_shot_time
@@ -56,7 +56,7 @@ func find_target():
 			enemy_areas.remove_at(i)
 
 	if len(enemy_areas) == 0:
-		_target = null
+		target = null
 		return
 
 	var closest_enemy_area = enemy_areas[0]
@@ -66,11 +66,11 @@ func find_target():
 			global_position.distance_to(closest_enemy_area.global_position):
 			closest_enemy_area = enemy_areas[i]
 	
-	_target = closest_enemy_area.get_parent()
+	target = closest_enemy_area.get_parent()
 
 # Check wether this tower can currently shoot
 func can_shoot():
-	if _target == null:
+	if target == null:
 		return false
 
 	if _main_scene.get_children_in_groups(resource_container, [_groups.RESOURCE]).is_empty():
@@ -81,7 +81,7 @@ func can_shoot():
 # Shoot a bullet, and charge it with time to move it forward in time corresponding to the difference between current time and next shot time.
 # The specific tower implementation handles the specifics of the shooting
 func shoot(charge_time):
-	_tower_specific.shoot(_target, charge_time)
+	_tower_specific.shoot(target, charge_time)
 
 # Called from world timer whenever it is reset. Add this function to all nodes that use next_event_time implementations
 func world_timer_reset():

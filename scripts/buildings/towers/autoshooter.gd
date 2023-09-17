@@ -20,6 +20,12 @@ func _ready():
 	_main_scene = get_node(_scene_paths.MAIN_SCENE)
 	_tower_generic = get_parent()
 
+func _process(_delta):
+	if _tower_generic.target != null:
+		var look_direction = _tower_generic.bullet_emitter.global_position - _tower_generic.target.global_position
+		var angle = look_direction.angle()
+		_tower_generic.bullet_emitter.rotation = angle
+
 # Shoot a bullet, and charge it with time to move it forward in time corresponding to the difference between current time and next shot time.
 func shoot(target, charge_time):
 	var start_pos = _tower_generic.bullet_emitter.global_position

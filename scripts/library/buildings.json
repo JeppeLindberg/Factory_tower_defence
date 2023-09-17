@@ -9,7 +9,7 @@
     },
     "autoshooter": {
         "prefab_path": "res://prefabs/buildings/towers/autoshooter.tscn",
-        "ui_sprite_path": "res://sprites/buildings/autoshooter.png",
+        "ui_sprite_path": "res://sprites/buildings/aztec_autoshooter.png",
         "placement_ghost_sprite_path": "res://sprites/buildings/tower_base_3x3.png",
         "cost": 30,
         "footprint_x": 3,

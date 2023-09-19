@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dx78awoua36rc"]
+[gd_scene load_steps=15 format=3 uid="uid://dx78awoua36rc"]
 
 [ext_resource type="Script" path="res://scripts/main_scene.gd" id="1_kikt0"]
 [ext_resource type="Script" path="res://scripts/controller.gd" id="1_v354r"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/world_timer.gd" id="2_k3tlx"]
 [ext_resource type="Script" path="res://scripts/tower_defence.gd" id="3_s4em8"]
 [ext_resource type="Script" path="res://scripts/debug.gd" id="3_txkdr"]
+[ext_resource type="Script" path="res://scripts/ui/tools_buttons.gd" id="4_1h23r"]
 [ext_resource type="Script" path="res://scripts/ui/building_buttons.gd" id="4_k8eb4"]
 [ext_resource type="TileSet" uid="uid://dnv1am0rkftcy" path="res://tilesets/kenny.tres" id="4_mxxtt"]
 [ext_resource type="Script" path="res://scripts/map.gd" id="5_r48p8"]
@@ -23,6 +24,42 @@ script = ExtResource("2_e2fnj")
 
 [node name="bottom_center" type="Node2D" parent="ui"]
 position = Vector2(588, 648)
+
+[node name="tools" type="NinePatchRect" parent="ui/bottom_center"]
+custom_minimum_size = Vector2(120, 50)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -71.0
+offset_top = -198.0
+offset_right = 49.0
+offset_bottom = -122.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("11_y0ryh")
+patch_margin_left = 30
+patch_margin_top = 30
+patch_margin_right = 30
+patch_margin_bottom = 30
+
+[node name="tools_buttons" type="HBoxContainer" parent="ui/bottom_center/tools"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.0
+offset_top = -15.0
+offset_right = 41.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+script = ExtResource("4_1h23r")
+remove_button_path = "res://prefabs/ui/remove_button.tscn"
 
 [node name="building_panel" type="NinePatchRect" parent="ui/bottom_center"]
 custom_minimum_size = Vector2(120, 120)

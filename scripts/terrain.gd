@@ -36,6 +36,7 @@ func spawn_building(building_name, building_info, coord, rotation_angle):
 
 	new_building.building_name = building_name
 	new_building.footprint = footprint
+	new_building.cost = building_info["cost"]
 
 	for x in footprint.x:
 		for y in footprint.y:
@@ -45,3 +46,14 @@ func spawn_building(building_name, building_info, coord, rotation_angle):
 	
 	new_building.initialize(_main_scene.coord_to_pos(coord), rotation_angle)
 
+func remove_building(building):
+	var footprint = building.footprint
+	var building_coord = _main_scene.pos_to_coord(building.global_position)
+
+	building.destroy()
+
+	for x in footprint.x:
+		for y in footprint.y:
+			var this_coord = Vector2i(building_coord.x + x, building_coord.y + y)
+			var index = find_index_of_cell(this_coord)
+			_cells[index] = {"building": null, "state": [_cell_states.BUILDABLE]}

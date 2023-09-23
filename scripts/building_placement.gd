@@ -3,10 +3,8 @@ extends Node2D
 var _buildings := preload("res://scripts/library/buildings.gd").new()
 var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
 var _cell_states := preload("res://scripts/library/cell_states.gd").new()
-var _tower_defence_states := preload("res://scripts/library/tower_defence_states.gd").new()
 
 var _main_scene
-var _tower_defence
 var _terrain
 var _debug
 var _building_ghost
@@ -21,7 +19,6 @@ var _ghost_texture
 
 func activate():
 	_main_scene = get_node(_scene_paths.MAIN_SCENE)
-	_tower_defence = get_node(_scene_paths.TOWER_DEFENCE)
 	_terrain = get_node(_scene_paths.TERRAIN)
 	_debug = get_node(_scene_paths.DEBUG)
 	_building_ghost = get_node("building_ghost")
@@ -78,10 +75,16 @@ func place_current_building_at_coord(coord):
 	_terrain.spawn_building(current_building_name, current_building, coord, rotation_angle)
 	resources -= current_building["cost"]
 
-func check_can_build():
-	if _tower_defence.get_state() == _tower_defence_states.PLANNING:
-		return true
-	return false
+# Remove the building at this coordinate
+func remove_building_at_coord(coord):
+	var building = _terrain.get_cell(coord)["building"]
+
+	if building == null:
+		return
+	
+	resources += building.cost
+	
+	_terrain.remove_building(building)
 
 func rotate_placement():
 	rotation_angle += 90

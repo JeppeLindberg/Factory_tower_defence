@@ -2,6 +2,7 @@ extends Node2D
 
 var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
 var _controller_states := preload("res://scripts/library/controller_states.gd").new()
+var _tower_defence_states := preload("res://scripts/library/tower_defence_states.gd").new()
 
 var _main_scene
 var _building_placement
@@ -50,7 +51,7 @@ func _unhandled_input(event):
 
 # Check if placing a building is correct behavour, and then show ghost or place building.
 func handle_place_building(event):
-	if _state == _controller_states.PLACE_BUILDING and _building_placement.check_can_build():
+	if _tower_defence.get_state() == _tower_defence_states.PLANNING and _state == _controller_states.PLACE_BUILDING:
 		_building_placement.show_building_ghost_at(_tile_coord)
 		
 		if event is InputEventMouseButton and event.pressed:
@@ -61,7 +62,9 @@ func handle_place_building(event):
 
 # Handle all remove tool related events
 func handle_remove_tool(event):
-	pass
+	if _tower_defence.get_state() == _tower_defence_states.PLANNING and _state == _controller_states.REMOVE:
+		if event is InputEventMouseButton and event.pressed:
+			_building_placement.remove_building_at_coord(_tile_coord)
 
 # Whenever a button is added, run this to add them to the set of all buttons.
 func add_button(button):

@@ -6,6 +6,7 @@ var _main_scene
 var _sprite
 var generic_building
 
+var cost
 var building_name
 var footprint
 
@@ -26,5 +27,5 @@ func get_building_rotation():
 
 # Remove this building from the terrain
 func destroy():
-	generic_building.destroy()
+	queue_free()
 

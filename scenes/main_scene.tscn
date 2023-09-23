@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dx78awoua36rc"]
+[gd_scene load_steps=15 format=3 uid="uid://dtju17l77b23a"]
 
 [ext_resource type="Script" path="res://scripts/main_scene.gd" id="1_kikt0"]
 [ext_resource type="Script" path="res://scripts/controller.gd" id="1_v354r"]
@@ -7,9 +7,9 @@
 [ext_resource type="Script" path="res://scripts/world_timer.gd" id="2_k3tlx"]
 [ext_resource type="Script" path="res://scripts/tower_defence.gd" id="3_s4em8"]
 [ext_resource type="Script" path="res://scripts/debug.gd" id="3_txkdr"]
-[ext_resource type="Script" path="res://scripts/ui/tools_buttons.gd" id="4_1h23r"]
-[ext_resource type="Script" path="res://scripts/ui/building_buttons.gd" id="4_k8eb4"]
+[ext_resource type="Script" path="res://scripts/ui/tool_button_spawner.gd" id="4_ljpqe"]
 [ext_resource type="TileSet" uid="uid://dnv1am0rkftcy" path="res://tilesets/kenny.tres" id="4_mxxtt"]
+[ext_resource type="Script" path="res://scripts/ui/building_button_spawner.gd" id="5_gk467"]
 [ext_resource type="Script" path="res://scripts/map.gd" id="5_r48p8"]
 [ext_resource type="Script" path="res://scripts/building_placement.gd" id="5_vuthm"]
 [ext_resource type="Script" path="res://scripts/paths.gd" id="11_lqva3"]
@@ -38,6 +38,7 @@ offset_right = 49.0
 offset_bottom = -122.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 0
 texture = ExtResource("11_y0ryh")
 patch_margin_left = 30
 patch_margin_top = 30
@@ -58,7 +59,7 @@ offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
-script = ExtResource("4_1h23r")
+script = ExtResource("4_ljpqe")
 remove_button_path = "res://prefabs/ui/remove_button.tscn"
 
 [node name="building_panel" type="NinePatchRect" parent="ui/bottom_center"]
@@ -73,6 +74,7 @@ offset_top = -120.0
 offset_right = 225.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 0
 texture = ExtResource("11_y0ryh")
 patch_margin_left = 30
 patch_margin_top = 30
@@ -93,7 +95,7 @@ offset_bottom = 40.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
-script = ExtResource("4_k8eb4")
+script = ExtResource("5_gk467")
 button_path = "res://prefabs/ui/building_button.tscn"
 
 [node name="world_timer" type="Node2D" parent="."]

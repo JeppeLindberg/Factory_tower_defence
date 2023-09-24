@@ -3,7 +3,7 @@ extends Node2D
 var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
 var _groups := preload("res://scripts/library/groups.gd").new()
 var _tower_defence_states := preload("res://scripts/library/tower_defence_states.gd").new()
-var _enemy_waves := preload("res://scripts/library/enemy_waves.gd").new()
+var _rounds := preload("res://scripts/library/rounds.gd").new()
 var _enemy_paths := preload("res://scripts/library/enemy_paths.gd").new()
 
 var _main_scene
@@ -76,7 +76,7 @@ func start_round():
 func start_enemy_spawn():
 	_remaining_enemy_spawns = []
 
-	var enemy_wave_dict = _enemy_waves.get_wave_by_index(_round)
+	var enemy_wave_dict = _rounds.get_wave_by_index(_round)
 	var enemy_dicts = enemy_wave_dict['enemies']
 
 	for enemy_dict in enemy_dicts:

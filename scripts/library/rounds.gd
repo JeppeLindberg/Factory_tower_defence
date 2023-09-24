@@ -1,5 +1,5 @@
 
-const _json_path = "res://scripts/library/enemy_waves.json"
+const _json_path = "res://scripts/library/rounds.json"
 
 var waves_dict = null
 

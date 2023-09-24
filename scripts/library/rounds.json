@@ -1,0 +1,58 @@
+{
+    "1": { 
+        "enemies": [
+            {"type": "basic_enemy", "quantity": 10}
+        ],
+        "rewards": [
+            {"resources": 20}
+        ]
+    },
+    "2": { 
+        "enemies": [
+            {"type": "basic_enemy", "quantity": 20}
+        ],
+        "rewards": [
+            {"resources": 20}
+        ]
+    },
+    "3": {
+        "enemies": [
+            {"type": "basic_enemy", "quantity": 30}
+        ],
+        "rewards": [
+            {"resources": 20}
+        ]
+    },
+    "4": { 
+        "enemies": [
+            {"type": "basic_enemy", "quantity": 40}
+        ],
+        "rewards": [
+            {"resources": 20}
+        ]
+    },
+    "5": { 
+        "enemies": [
+            {"type": "basic_enemy", "quantity": 60}
+        ],
+        "rewards": [
+            {"resources": 20}
+        ]
+    },
+    "6": { 
+        "enemies": [
+            {"type": "basic_enemy", "quantity": 80}
+        ],
+        "rewards": [
+            {"resources": 20}
+        ]
+    },
+    "7": { 
+        "enemies": [
+            {"type": "basic_enemy", "quantity": 100}
+        ],
+        "rewards": [
+            {"resources": 20}
+        ]
+    }
+}

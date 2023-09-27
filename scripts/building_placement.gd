@@ -11,7 +11,7 @@ var _building_ghost
 
 var current_building = null
 var current_building_name = null
-var resources = 200
+var resources = 100
 var rotation_angle = 0
 
 var _ghost_texture

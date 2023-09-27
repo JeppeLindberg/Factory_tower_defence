@@ -1,12 +1,4 @@
 {
-    "slag_shooter": {
-        "prefab_path": "res://prefabs/buildings/towers/slag_shooter.tscn",
-        "ui_sprite_path": "res://sprites/buildings/tower_base.png",
-        "placement_ghost_sprite_path": "res://sprites/buildings/tower_base.png",
-        "cost": 20,
-        "footprint_x": 2,
-        "footprint_y": 2
-    },
     "autoshooter": {
         "prefab_path": "res://prefabs/buildings/towers/autoshooter.tscn",
         "ui_sprite_path": "res://sprites/buildings/aztec_autoshooter.png",
@@ -19,7 +11,7 @@
         "prefab_path": "res://prefabs/buildings/gathering/stone_drill.tscn",
         "ui_sprite_path": "res://sprites/buildings/stone_drill.png",
         "placement_ghost_sprite_path": "res://sprites/buildings/stone_drill.png",
-        "cost": 0,
+        "cost": 10,
         "footprint_x": 2,
         "footprint_y": 2
     },
@@ -27,7 +19,7 @@
         "prefab_path": "res://prefabs/buildings/transport/conveyor_belt.tscn",
         "ui_sprite_path": "res://sprites/buildings/conveyor_belt.png",
         "placement_ghost_sprite_path": "res://sprites/buildings/conveyor_belt.png",
-        "cost": 0,
+        "cost": 1,
         "footprint_x": 1,
         "footprint_y": 1
     },
@@ -35,7 +27,7 @@
         "prefab_path": "res://prefabs/buildings/transport/splitter.tscn",
         "ui_sprite_path": "res://sprites/buildings/splitter.png",
         "placement_ghost_sprite_path": "res://sprites/buildings/splitter.png",
-        "cost": 0,
+        "cost": 2,
         "footprint_x": 2,
         "footprint_y": 1
     }

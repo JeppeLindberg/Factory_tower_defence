@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://ty1yxhb55eoj"]
+[gd_scene load_steps=3 format=3 uid="uid://ty1yxhb55eoj"]
 
+[ext_resource type="Script" path="res://scripts/ui/reward_generic.gd" id="1_at6b8"]
 [ext_resource type="Texture2D" uid="uid://b0go126ne14t1" path="res://sprites/panel.png" id="1_rpx3r"]
 
-[node name="choice_container" type="MarginContainer"]
+[node name="reward_generic" type="MarginContainer"]
+script = ExtResource("1_at6b8")
 
 [node name="panel" type="NinePatchRect" parent="."]
 layout_mode = 2
@@ -27,7 +29,7 @@ alignment = 1
 
 [node name="title" type="Label" parent="content_container/content"]
 layout_mode = 2
-text = "choice1"
+text = "Kinetic damage +"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -39,11 +41,9 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 4
 bbcode_enabled = true
-text = "[center]Test
-
-Test[/center]"
+text = "[center]+ 50% Kinetic damage[/center]"
 fit_content = true
 
-[node name="Button" type="Button" parent="content_container/content"]
+[node name="select" type="Button" parent="content_container/content"]
 layout_mode = 2
 text = "Select"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dtju17l77b23a"]
+[gd_scene load_steps=17 format=3 uid="uid://dtju17l77b23a"]
 
 [ext_resource type="Script" path="res://scripts/main_scene.gd" id="1_kikt0"]
 [ext_resource type="Script" path="res://scripts/controller.gd" id="1_v354r"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://scripts/map.gd" id="5_r48p8"]
 [ext_resource type="Script" path="res://scripts/building_placement.gd" id="5_vuthm"]
 [ext_resource type="PackedScene" uid="uid://ty1yxhb55eoj" path="res://prefabs/ui/reward_choice.tscn" id="6_qmsv7"]
+[ext_resource type="Script" path="res://scripts/rewards.gd" id="9_5ngv4"]
 [ext_resource type="Script" path="res://scripts/paths.gd" id="11_lqva3"]
 [ext_resource type="Texture2D" uid="uid://b0go126ne14t1" path="res://sprites/panel.png" id="11_y0ryh"]
 
@@ -120,6 +121,9 @@ script = ExtResource("2_k3tlx")
 [node name="tower_defence" type="Node2D" parent="."]
 script = ExtResource("3_s4em8")
 enemy_path = "res://prefabs/enemies/basic_enemy.tscn"
+
+[node name="rewards" type="Node2D" parent="."]
+script = ExtResource("9_5ngv4")
 
 [node name="terrain" type="Node2D" parent="."]
 script = ExtResource("2_21qa5")

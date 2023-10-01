@@ -12,6 +12,7 @@ var _debug
 var _terrain
 var _enemies
 var _paths
+var _rewards
 
 @export var enemy_path: String
 
@@ -39,7 +40,6 @@ func _process(_delta):
 	_debug.add_debug_text("round", _round)
 	_debug.add_debug_text("tower_defence state", _state)
 	_debug.add_debug_text("health", _remaining_health)
-	# _debug.add_debug_text("remaining_enemies", _remaining_enemies)
 
 	if _state == _tower_defence_states.PLANNING:
 		return
@@ -99,6 +99,18 @@ func end_round():
 		_world_timer.reset()
 
 		_round += 1
+
+		_handle_rewards()
+
+# Give the player rewards for the current wave
+func _handle_rewards():
+	_change_state(_tower_defence_states.REWARDS)
+
+	_rewards.give_rewards(_round)
+
+# Give the control back to tower_defence from the reward screen, and continue the game
+func finish_handling_rewards():
+	if _state == _tower_defence_states.REWARDS:
 		_change_state(_tower_defence_states.PLANNING)
 
 # Change the state of the tower defence part of the game

@@ -28,6 +28,10 @@ func activate():
 func _process(_delta):
 	_debug.add_debug_text("resources", resources)
 
+# Add some more available resources
+func add_resources(res_to_add):
+	resources += res_to_add
+
 # Change the currently active building
 func set_current_building(building_name):
 	current_building = _buildings.get_building_by_name(building_name)

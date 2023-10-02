@@ -7,7 +7,7 @@ var _main_scene
 var _debug
 
 var time_mult = 1.0
-var _seconds = 0
+var _seconds = 0.0
 var _state
 
 
@@ -37,7 +37,7 @@ func pause():
 
 # Reset the clock
 func reset():
-	_seconds = 0
+	_seconds = 0.0
 
 	propogate_reset(_main_scene)
 

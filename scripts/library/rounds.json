@@ -4,6 +4,8 @@
             {"type": "basic_enemy", "quantity": 10}
         ],
         "rewards": {
+            "resources": 20,
+            "card_reward": true
         }
     },
     "2": { 

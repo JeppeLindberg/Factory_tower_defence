@@ -14,3 +14,6 @@ const CONVEYOR: String = "conveyor"
 const PLACER: String = "placer"
 
 const PATH_TRIGGER: String = "path_trigger"
+
+# Implementation groups
+const REWARD_SPECIFIC: String = "reward_specific"

@@ -12,7 +12,7 @@
 [ext_resource type="Script" path="res://scripts/ui/building_button_spawner.gd" id="5_gk467"]
 [ext_resource type="Script" path="res://scripts/map.gd" id="5_r48p8"]
 [ext_resource type="Script" path="res://scripts/building_placement.gd" id="5_vuthm"]
-[ext_resource type="PackedScene" uid="uid://ty1yxhb55eoj" path="res://prefabs/ui/reward_choice.tscn" id="6_qmsv7"]
+[ext_resource type="Script" path="res://scripts/ui/reward_choices.gd" id="6_uq4dw"]
 [ext_resource type="Script" path="res://scripts/rewards.gd" id="9_5ngv4"]
 [ext_resource type="Script" path="res://scripts/paths.gd" id="11_lqva3"]
 [ext_resource type="Texture2D" uid="uid://b0go126ne14t1" path="res://sprites/panel.png" id="11_y0ryh"]
@@ -103,17 +103,16 @@ button_path = "res://prefabs/ui/building_button.tscn"
 [node name="center" type="Node2D" parent="ui"]
 position = Vector2(587, 257)
 
-[node name="choice" type="CenterContainer" parent="ui/center"]
+[node name="reward_choice_center" type="CenterContainer" parent="ui/center"]
 offset_left = 3.0
 offset_right = 3.0
 offset_bottom = 60.0
 use_top_left = true
 
-[node name="reward_choice" type="HBoxContainer" parent="ui/center/choice"]
+[node name="reward_choices" type="HBoxContainer" parent="ui/center/reward_choice_center"]
 layout_mode = 2
-
-[node name="choice_container" parent="ui/center/choice/reward_choice" instance=ExtResource("6_qmsv7")]
-layout_mode = 2
+script = ExtResource("6_uq4dw")
+reward_generic_path = "res://prefabs/ui/reward_choice.tscn"
 
 [node name="world_timer" type="Node2D" parent="."]
 script = ExtResource("2_k3tlx")

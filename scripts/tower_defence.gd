@@ -29,10 +29,11 @@ func activate():
 	_world_timer = get_node(_scene_paths.WORLD_TIMER)
 	_debug = get_node(_scene_paths.DEBUG)
 	_terrain = get_node(_scene_paths.TERRAIN)
+	_rewards = get_node(_scene_paths.REWARDS)
 	_paths = _terrain.get_node("paths")
 	_enemies = _terrain.get_node("enemies")
 
-	_state = _tower_defence_states.PLANNING
+	_handle_rewards()
 	_world_timer.pause()
 	_world_timer.reset()
 
@@ -42,6 +43,8 @@ func _process(_delta):
 	_debug.add_debug_text("health", _remaining_health)
 
 	if _state == _tower_defence_states.PLANNING:
+		return
+	if _state == _tower_defence_states.REWARDS:
 		return
 
 	if _state == _tower_defence_states.WAITING_FOR_ENEMY_DEATH:

@@ -47,3 +47,5 @@ fit_content = true
 [node name="select" type="Button" parent="content_container/content"]
 layout_mode = 2
 text = "Select"
+
+[connection signal="pressed" from="content_container/content/select" to="." method="_on_select_pressed"]

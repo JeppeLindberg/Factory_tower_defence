@@ -13,7 +13,8 @@
             {"type": "basic_enemy", "quantity": 20}
         ],
         "rewards": {
-            "resources": 20
+            "resources": 20,
+            "card_reward": true
         }
     },
     "3": {
@@ -21,7 +22,8 @@
             {"type": "basic_enemy", "quantity": 30}
         ],
         "rewards": {
-            "resources": 20
+            "resources": 20,
+            "card_reward": true
         }
     },
     "4": { 
@@ -29,7 +31,8 @@
             {"type": "basic_enemy", "quantity": 40}
         ],
         "rewards": {
-            "resources": 20
+            "resources": 20,
+            "card_reward": true
         }
     },
     "5": { 
@@ -37,7 +40,8 @@
             {"type": "basic_enemy", "quantity": 60}
         ],
         "rewards": {
-            "resources": 20
+            "resources": 20,
+            "card_reward": true
         }
     },
     "6": { 
@@ -45,7 +49,8 @@
             {"type": "basic_enemy", "quantity": 80}
         ],
         "rewards": {
-            "resources": 20
+            "resources": 20,
+            "card_reward": true
         }
     },
     "7": { 
@@ -53,7 +58,8 @@
             {"type": "basic_enemy", "quantity": 100}
         ],
         "rewards": {
-            "resources": 20
+            "resources": 20,
+            "card_reward": true
         }
     }
 }

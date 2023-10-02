@@ -21,3 +21,5 @@ func initialize(card_reward):
 func select_this():
     _reward_choices.reward_selected(_reward_specific)
 
+func _on_select_pressed():
+    select_this()

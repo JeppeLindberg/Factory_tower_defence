@@ -29,7 +29,7 @@ func _process(_delta):
 				
 				_building_placement.add_resources(add_resources)
 
-			continue_giving_rewards()
+			_continue_giving_rewards()
 			return
 		
 		if _reward_index == 1:
@@ -37,7 +37,7 @@ func _process(_delta):
 				handle_card_reward()
 				return
 			else:
-				continue_giving_rewards()
+				_continue_giving_rewards()
 				return
 
 		if _reward_index == 2:
@@ -47,6 +47,10 @@ func _process(_delta):
 func handle_card_reward():
 	_reward_choices.spawn_card_rewards("kinetic_damage_plus")
 
+# Callback from card rewards
+func finish_handling_card_reward():
+	_continue_giving_rewards()
+
 # Begin the process of giving rewards
 func give_rewards(round_index):
 	_round_rewards = _rounds.get_wave_by_index(round_index)["rewards"]
@@ -54,7 +58,7 @@ func give_rewards(round_index):
 	_continue = true
 
 # Continue giving rewards after pausing control from this script
-func continue_giving_rewards():
+func _continue_giving_rewards():
 	_continue = true
 	_reward_index += 1
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dtju17l77b23a"]
+[gd_scene load_steps=18 format=3 uid="uid://dtju17l77b23a"]
 
 [ext_resource type="Script" path="res://scripts/main_scene.gd" id="1_kikt0"]
 [ext_resource type="Script" path="res://scripts/controller.gd" id="1_v354r"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scripts/rewards.gd" id="9_5ngv4"]
 [ext_resource type="Script" path="res://scripts/paths.gd" id="11_lqva3"]
 [ext_resource type="Texture2D" uid="uid://b0go126ne14t1" path="res://sprites/panel.png" id="11_y0ryh"]
+[ext_resource type="Script" path="res://scripts/upgrades.gd" id="17_st5ax"]
 
 [node name="main_scene" type="Node2D"]
 script = ExtResource("1_kikt0")
@@ -112,7 +113,7 @@ use_top_left = true
 [node name="reward_choices" type="HBoxContainer" parent="ui/center/reward_choice_center"]
 layout_mode = 2
 script = ExtResource("6_uq4dw")
-reward_generic_path = "res://prefabs/ui/reward_choice.tscn"
+reward_choice_path = "res://prefabs/ui/reward_choice.tscn"
 
 [node name="world_timer" type="Node2D" parent="."]
 script = ExtResource("2_k3tlx")
@@ -176,3 +177,6 @@ layout_mode = 0
 offset_right = 453.0
 offset_bottom = 494.0
 mouse_filter = 2
+
+[node name="upgrades" type="Node2D" parent="."]
+script = ExtResource("17_st5ax")

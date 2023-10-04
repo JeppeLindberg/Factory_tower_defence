@@ -1,3 +1,0 @@
-[gd_scene format=3 uid="uid://yjhpcx8ua8no"]
-
-[node name="kinetic_damage_plus" type="Node2D" groups=["reward_specific"]]

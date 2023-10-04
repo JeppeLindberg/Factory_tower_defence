@@ -2,7 +2,7 @@ extends MarginContainer
 
 var _scene_paths := preload("res://scripts/library/scene_paths.gd").new()
 
-const _card_reward_path = 'res://prefabs/card_rewards/%1.tscn'
+const _upgrades_path = 'res://prefabs/upgrades/%1.tscn'
 
 var _main_scene
 var _reward_choices
@@ -14,7 +14,7 @@ func _ready():
     _reward_choices = get_node(_scene_paths.REWARD_CHOICES)
 
 func initialize(card_reward):
-    var path = _card_reward_path.replace('%1', card_reward)
+    var path = _upgrades_path.replace('%1', card_reward)
     _reward_specific = _main_scene.create_node(path, self)
     _reward_specific.position = Vector2.ZERO
 

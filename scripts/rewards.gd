@@ -7,6 +7,7 @@ var _main_scene
 var _building_placement
 var _tower_defence
 var _reward_choices
+var _upgrades
 
 var _continue
 var _reward_index = 0
@@ -18,6 +19,7 @@ func activate():
 	_building_placement = get_node(_scene_paths.BUILDING_PLACEMENT)
 	_tower_defence = get_node(_scene_paths.TOWER_DEFENCE)
 	_reward_choices = get_node(_scene_paths.REWARD_CHOICES)
+	_upgrades = get_node(_scene_paths.UPGRADES)
 
 func _process(_delta):
 	if _continue:
@@ -45,10 +47,12 @@ func _process(_delta):
 
 # Spawn card rewards. They make a callback when one is chosen.
 func handle_card_reward():
-	_reward_choices.spawn_card_rewards("kinetic_damage_plus")
+	_reward_choices.spawn_card_rewards("global_kinetic_damage_plus")
 
 # Callback from card rewards
-func finish_handling_card_reward():
+func reward_selected(selected_reward):
+	selected_reward.reparent(_upgrades)
+	selected_reward.position = Vector2.ZERO
 	_continue_giving_rewards()
 
 # Begin the process of giving rewards

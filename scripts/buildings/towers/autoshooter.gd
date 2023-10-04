@@ -14,10 +14,12 @@ var _power_types := preload("res://scripts/library/power_types.gd").new()
 
 var _tower_generic
 var _main_scene
+var _upgrades
 
 
 func _ready():
 	_main_scene = get_node(_scene_paths.MAIN_SCENE)
+	_upgrades = get_node(_scene_paths.UPGRADES)
 	_tower_generic = get_parent()
 
 func _process(_delta):
@@ -31,7 +33,7 @@ func shoot(target, charge_time):
 	var start_pos = _tower_generic.bullet_emitter.global_position
 	var move_range = get_range_as_pixels() * 1.25
 	var resource = _tower_generic.resource_container.select_pick_resource()
-	var damage = _get_damage(resource.get_power())
+	var damage = _get_damage(_upgrades.get_power(resource))
 
 	for i in range(bullet_split):
 		var new_bullet = _main_scene.create_node(bullet_path, _tower_generic.bullet_container)

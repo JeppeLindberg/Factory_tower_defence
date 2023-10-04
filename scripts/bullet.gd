@@ -63,5 +63,6 @@ func _physics_process(_delta):
 func collide_with_enemy(enemy_node):
 	var enemy_generic = enemy_node.get_node("enemy_generic")
 	enemy_generic.take_damage(_damage)
+	_debug.add_debug_text('latest_damage', _damage)
 	queue_free()
 

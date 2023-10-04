@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://yjhpcx8ua8no"]
+
+[ext_resource type="Script" path="res://scripts/upgrades/global_kinetic_damage_plus.gd" id="1_ppka4"]
+
+[node name="global_kinetic_damage_plus" type="Node2D"]
+script = ExtResource("1_ppka4")
+kinetic_dmg_mult = 1.5
